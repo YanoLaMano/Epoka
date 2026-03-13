@@ -4,10 +4,11 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
-import android.widget.ArrayAdapter
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.epoka.app.SessionManager
+import com.epoka.app.adapter.VilleAdapter
 import com.epoka.app.api.RetrofitClient
 import com.epoka.app.databinding.ActivityCreateMissionBinding
 import com.epoka.app.model.CreateMissionRequest
@@ -21,10 +22,13 @@ class CreateMissionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateMissionBinding
     private lateinit var session: SessionManager
 
-    private var villes: List<Ville> = emptyList()
+    // Code/libellé : on stocke l'objet Ville sélectionné directement
+    private var villeDepart:  Ville? = null
+    private var villeArrivee: Ville? = null
+
     private var dateDebut: Calendar? = null
     private var dateFin:   Calendar? = null
-    private val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    private val sdf        = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     private val sdfDisplay = SimpleDateFormat("dd/MM/yyyy", Locale.FRENCH)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +56,6 @@ class CreateMissionActivity : AppCompatActivity() {
     private fun setupDatePickers() {
         binding.etDateDebut.setOnClickListener { pickDate(isDebut = true) }
         binding.etDateFin.setOnClickListener   { pickDate(isDebut = false) }
-        // Pas de clavier sur ces champs
         binding.etDateDebut.isFocusable = false
         binding.etDateFin.isFocusable   = false
     }
@@ -61,13 +64,8 @@ class CreateMissionActivity : AppCompatActivity() {
         val cal = Calendar.getInstance()
         DatePickerDialog(this, { _, y, m, d ->
             val picked = Calendar.getInstance().apply { set(y, m, d) }
-            if (isDebut) {
-                dateDebut = picked
-                binding.etDateDebut.setText(sdfDisplay.format(picked.time))
-            } else {
-                dateFin = picked
-                binding.etDateFin.setText(sdfDisplay.format(picked.time))
-            }
+            if (isDebut) { dateDebut = picked; binding.etDateDebut.setText(sdfDisplay.format(picked.time)) }
+            else         { dateFin   = picked; binding.etDateFin.setText(sdfDisplay.format(picked.time))   }
         }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH)).show()
     }
 
@@ -76,17 +74,26 @@ class CreateMissionActivity : AppCompatActivity() {
             try {
                 val response = RetrofitClient.api.getVilles()
                 if (response.isSuccessful) {
-                    villes = response.body() ?: emptyList()
-                    val villeNames = villes.map { it.toString() }
-                    val adapterVille = ArrayAdapter(
-                        this@CreateMissionActivity,
-                        android.R.layout.simple_dropdown_item_1line,
-                        villeNames
-                    )
-                    binding.actvDepart.setAdapter(adapterVille)
-                    binding.actvArrivee.setAdapter(adapterVille)
-                    binding.actvDepart.threshold = 1
+                    val villes = response.body() ?: emptyList()
+
+                    // VilleAdapter : pattern code/libellé — toString() affiche "Nom (CP)", l'id est le code
+                    val adapterDepart  = VilleAdapter(this@CreateMissionActivity, villes)
+                    val adapterArrivee = VilleAdapter(this@CreateMissionActivity, villes)
+
+                    binding.actvDepart.setAdapter(adapterDepart)
+                    binding.actvArrivee.setAdapter(adapterArrivee)
+                    binding.actvDepart.threshold  = 1
                     binding.actvArrivee.threshold = 1
+
+                    // Capture directe de l'objet Ville sélectionné (code = id, libellé = toString())
+                    binding.actvDepart.onItemClickListener = AdapterView.OnItemClickListener { _, _, pos, _ ->
+                        villeDepart = adapterDepart.getItem(pos)
+                        binding.tilDepart.error = null
+                    }
+                    binding.actvArrivee.onItemClickListener = AdapterView.OnItemClickListener { _, _, pos, _ ->
+                        villeArrivee = adapterArrivee.getItem(pos)
+                        binding.tilArrivee.error = null
+                    }
                 }
             } catch (_: Exception) {
                 showError("Impossible de charger les villes")
@@ -94,16 +101,10 @@ class CreateMissionActivity : AppCompatActivity() {
         }
     }
 
-    private fun getSelectedVille(text: String): Ville? =
-        villes.firstOrNull { it.toString() == text }
-
     private fun submit() {
         val intitule = binding.etIntitule.text.toString().trim()
-        val departText  = binding.actvDepart.text.toString()
-        val arriveeText = binding.actvArrivee.text.toString()
-        val nbRepas = binding.etNbRepas.text.toString().toIntOrNull() ?: 0
+        val nbRepas  = binding.etNbRepas.text.toString().toIntOrNull() ?: 0
 
-        // Validation
         if (intitule.isEmpty()) { binding.tilIntitule.error = "Intitulé requis"; return }
         binding.tilIntitule.error = null
 
@@ -114,41 +115,36 @@ class CreateMissionActivity : AppCompatActivity() {
         binding.tilDateFin.error = null
 
         if (dateDebut!!.after(dateFin)) {
-            binding.tilDateFin.error = "La date de fin doit être après la date de début"
-            return
+            binding.tilDateFin.error = "La date de fin doit être après la date de début"; return
         }
         binding.tilDateFin.error = null
 
-        val villeDepart  = getSelectedVille(departText)
-        val villeArrivee = getSelectedVille(arriveeText)
-
-        if (villeDepart == null)  { binding.tilDepart.error  = "Ville de départ invalide";  return }
-        if (villeArrivee == null) { binding.tilArrivee.error = "Ville d'arrivée invalide"; return }
+        if (villeDepart == null)  { binding.tilDepart.error  = "Sélectionnez une ville de départ";  return }
+        if (villeArrivee == null) { binding.tilArrivee.error = "Sélectionnez une ville d'arrivée"; return }
         binding.tilDepart.error  = null
         binding.tilArrivee.error = null
 
-        if (villeDepart.id == villeArrivee.id) {
-            binding.tilArrivee.error = "La ville d'arrivée doit être différente du départ"
-            return
+        if (villeDepart!!.id == villeArrivee!!.id) {
+            binding.tilArrivee.error = "La ville d'arrivée doit être différente du départ"; return
         }
 
         setLoading(true)
 
         val request = CreateMissionRequest(
-            intitule      = intitule,
-            dateDebut     = sdf.format(dateDebut!!.time),
-            dateFin       = sdf.format(dateFin!!.time),
-            idVilleDepart = villeDepart.id,
-            idVilleArrivee= villeArrivee.id,
-            idSalarie     = session.getSalarieId(),
-            nbRepas       = nbRepas
+            intitule       = intitule,
+            dateDebut      = sdf.format(dateDebut!!.time),
+            dateFin        = sdf.format(dateFin!!.time),
+            idVilleDepart  = villeDepart!!.id,
+            idVilleArrivee = villeArrivee!!.id,
+            idSalarie      = session.getSalarieId(),
+            nbRepas        = nbRepas
         )
 
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.api.createMission(request)
                 if (response.isSuccessful && response.body()?.success == true) {
-                    finish() // Retour à la liste
+                    finish()
                 } else {
                     showError(response.body()?.error ?: "Erreur lors de la création")
                 }

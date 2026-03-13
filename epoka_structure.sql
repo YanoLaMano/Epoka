@@ -75,6 +75,7 @@ CREATE TABLE `mission` (
   `id_ville_depart` int(11) NOT NULL,
   `id_ville_arrivee` int(11) NOT NULL,
   `id_salarie` int(11) NOT NULL,
+  `nb_repas` int(11) NOT NULL DEFAULT 0,
   `statut` enum('brouillon','validee','payee') NOT NULL DEFAULT 'brouillon',
   PRIMARY KEY (`id`),
   KEY `id_ville_depart` (`id_ville_depart`),
