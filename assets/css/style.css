@@ -1354,17 +1354,19 @@ table.table tbody tr:last-child td {
     padding: 2rem 1rem;
 }
 
-/* ── Glass card ── */
+/* ── Glass card (split layout) ── */
 .login-card {
     width: 100%;
-    max-width: 460px;
+    max-width: 860px;
+    display: flex;
+    flex-direction: row;
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
     box-shadow: var(--glass-shadow);
-    padding: 2.5rem 2.5rem 2rem;
+    overflow: hidden;
     animation: loginCardIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
@@ -1373,69 +1375,144 @@ table.table tbody tr:last-child td {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── Card top: mascot + logo ── */
-.login-card-top {
+/* ── Panneau gauche : Bienvenue ── */
+.login-panel-welcome {
+    flex: 0 0 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 1.25rem;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 2.5rem 1.75rem;
+    background: linear-gradient(155deg, rgba(40,53,147,0.18) 0%, rgba(57,73,171,0.08) 60%, transparent 100%);
+    border-right: 1px solid var(--glass-border);
+    text-align: center;
 }
 
+/* ── Panneau droit : Formulaire ── */
+.login-panel-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 2.5rem 2rem;
+    min-width: 0;
+}
+
+/* ── Logo ── */
 .login-card-logo {
-    height: 24px;
+    height: 22px;
     width: auto;
     filter: var(--logo-filter);
-    margin-top: 0.75rem;
+    margin-top: 0.5rem;
     opacity: 0.85;
     transition: opacity 0.2s ease;
 }
-
 .login-card-logo:hover { opacity: 1; }
 
-/* ── Headings ── */
-.login-card-heading {
-    text-align: center;
-    margin-bottom: 1.75rem;
-}
-
-.login-form-title {
-    font-size: 1.6rem;
+/* ── Titres panneau bienvenue ── */
+.login-welcome-title {
+    font-size: 1.45rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 0.35rem;
     letter-spacing: -0.03em;
+    margin: 0.6rem 0 0.1rem;
 }
 
-.login-form-subtitle {
-    font-size: 0.88rem;
+.login-welcome-sub {
+    font-size: 0.8rem;
     color: var(--text-secondary);
-    margin: 0;
+    margin: 0 0 0.9rem;
 }
 
-.login-intro {
-    margin-top: 0.9rem;
-    padding: 0.6rem 0.9rem;
-    background: var(--glass-bg);
-    border: 1px solid var(--border-color);
+/* ── Feature list ── */
+.login-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.login-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.65rem 0.85rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-md);
-    animation: loginIntroFadeIn 0.7s ease 0.25s both;
+    text-align: left;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    animation: loginIntroFadeIn 0.6s ease both;
 }
 
-.login-intro-text {
-    font-size: 0.81rem;
-    color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.55;
+.login-feature-item:nth-child(1) { animation-delay: 0.15s; }
+.login-feature-item:nth-child(2) { animation-delay: 0.25s; }
+.login-feature-item:nth-child(3) { animation-delay: 0.35s; }
+
+.login-feature-item:hover {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+    transform: translateX(3px);
 }
 
-.login-intro-highlight {
+.login-feature-icon {
     color: var(--accent);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.login-feature-icon svg { width: 17px; height: 17px; }
+
+.login-feature-item > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+}
+
+.login-feature-item strong {
+    font-size: 0.83rem;
     font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.login-feature-item span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    line-height: 1.2;
 }
 
 @keyframes loginIntroFadeIn {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── En-tête panneau formulaire ── */
+.login-form-header {
+    margin-bottom: 1.75rem;
+}
+
+.login-form-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+    letter-spacing: -0.03em;
+}
+
+.login-form-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.4;
+}
+
+[data-theme="liquid-light"] .login-panel-welcome {
+    background: linear-gradient(155deg, rgba(40,53,147,0.09) 0%, rgba(57,73,171,0.04) 60%, transparent 100%);
+}
+
+[data-theme="liquid-light"] .login-feature-item {
+    background: rgba(0,0,0,0.03);
 }
 
 /* ── Form ── */
@@ -1740,13 +1817,44 @@ table.table tbody tr:last-child td {
 .mascot-container[data-state="scared"] .mascot-mouth   { d: path("M 90,142 Q 100,133 110,142"); }
 
 /* ── Responsive ── */
-@media (max-width: 575.98px) {
+@media (max-width: 720px) {
     .login-card {
-        padding: 2rem 1.5rem 1.5rem;
-        border-radius: var(--radius-lg);
+        flex-direction: column;
+        max-width: 460px;
     }
 
-    .login-form-title { font-size: 1.4rem; }
+    .login-panel-welcome {
+        flex: none;
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 2rem 1.75rem 1.5rem;
+        gap: 0.25rem;
+    }
+
+    .login-features {
+        flex-direction: row;
+    }
+
+    .login-feature-item {
+        flex: 1;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 0.3rem;
+        padding: 0.55rem 0.4rem;
+    }
+
+    .login-feature-item:hover { transform: translateY(-2px); }
+
+    .login-feature-item > div { align-items: center; }
+
+    .login-feature-item span { display: none; }
+
+    .login-panel-form {
+        padding: 2rem 1.75rem 1.5rem;
+    }
+
+    .login-form-title { font-size: 1.35rem; }
 }
 
 /* ========== Detail View (Mission) ========== */

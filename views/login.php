@@ -32,8 +32,9 @@
     <div class="login-card-outer">
         <div class="login-card">
 
-            <!-- Mascot + Logo -->
-            <div class="login-card-top">
+            <!-- ── Panneau Bienvenue (gauche) ── -->
+            <div class="login-panel-welcome">
+
                 <div class="mascot-container" id="mascotContainer">
                     <svg class="mascot-svg" viewBox="0 0 200 250" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -122,78 +123,103 @@
                         </g>
                     </svg>
                 </div>
-                <img src="assets/img/logo.svg" class="login-card-logo" alt="Epoka">
-            </div>
 
-            <!-- Heading -->
-            <div class="login-card-heading">
+                <img src="assets/img/logo.svg" class="login-card-logo" alt="Epoka">
+
                 <?php
                 $h = (int)date('H');
                 if ($h >= 5  && $h < 12) $greeting = 'Bonjour';
                 elseif ($h >= 12 && $h < 18) $greeting = 'Bon après-midi';
                 else $greeting = 'Bonsoir';
                 ?>
-                <h1 class="login-form-title"><?= $greeting ?>&nbsp;!</h1>
-                <p class="login-form-subtitle">Connectez-vous à votre espace Epoka</p>
-                <div class="login-intro">
-                    <p class="login-intro-text">
-                        Gérez vos <span class="login-intro-highlight">missions</span>,
-                        vos <span class="login-intro-highlight">salariés</span> et
-                        vos <span class="login-intro-highlight">agences</span>
-                        en toute simplicité.
-                    </p>
-                </div>
-            </div>
+                <h2 class="login-welcome-title"><?= $greeting ?>&nbsp;!</h2>
+                <p class="login-welcome-sub">Votre espace de gestion intégré</p>
 
-            <?php
-            $flash = getFlash();
-            if ($flash):
-            ?>
-            <div class="flash-message flash-<?= $flash['type'] ?>">
-                <?= $flash['type'] === 'success' ? '<i data-lucide="check-circle" class="icon-sm"></i>' : '<i data-lucide="x-circle" class="icon-sm"></i>' ?>
-                <?= escape($flash['message']) ?>
-            </div>
-            <?php endif; ?>
-
-            <form method="POST" action="index.php?page=login" class="login-form">
-                <div class="login-input-group">
-                    <label class="form-label" for="id">Identifiant</label>
-                    <div class="login-input-wrapper">
-                        <span class="login-input-icon"><i data-lucide="user"></i></span>
-                        <input type="number" id="id" name="id" class="form-control login-input" placeholder="Votre identifiant" min="1" required autofocus>
+                <div class="login-features">
+                    <div class="login-feature-item">
+                        <span class="login-feature-icon"><i data-lucide="briefcase"></i></span>
+                        <div>
+                            <strong>Missions</strong>
+                            <span>Suivi complet des affectations</span>
+                        </div>
+                    </div>
+                    <div class="login-feature-item">
+                        <span class="login-feature-icon"><i data-lucide="users"></i></span>
+                        <div>
+                            <strong>Salariés</strong>
+                            <span>Gestion des collaborateurs</span>
+                        </div>
+                    </div>
+                    <div class="login-feature-item">
+                        <span class="login-feature-icon"><i data-lucide="building-2"></i></span>
+                        <div>
+                            <strong>Agences</strong>
+                            <span>Réseau d'agences centralisé</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="login-input-group">
-                    <label class="form-label" for="mot_de_passe">Mot de passe</label>
-                    <div class="login-input-wrapper">
-                        <span class="login-input-icon"><i data-lucide="lock"></i></span>
-                        <input type="password" id="mot_de_passe" name="mot_de_passe" class="form-control login-input" placeholder="Votre mot de passe" required>
-                        <button type="button" class="login-toggle-pw" id="togglePwBtn" tabindex="-1" aria-label="Afficher le mot de passe">
-                            <i data-lucide="eye" id="pwIcon"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="login-options">
-                    <label class="login-remember">
-                        <input type="checkbox" name="remember" value="1">
-                        <span>Se souvenir de moi</span>
-                    </label>
-                </div>
-
-                <button type="submit" class="btn btn-primary login-submit-btn">
-                    <i data-lucide="log-in" class="icon-sm"></i> Se connecter
-                </button>
-            </form>
-
-            <div class="login-hint">
-                <i data-lucide="info" class="icon-sm"></i>
-                Compte démo&nbsp;: ID <strong>1</strong> / Mot de passe <strong>admin</strong>
             </div>
 
-            <div class="login-form-footer">
-                &copy; <?= date('Y') ?> Epoka &mdash; Tous droits réservés
+            <!-- ── Panneau Connexion (droite) ── -->
+            <div class="login-panel-form">
+
+                <div class="login-form-header">
+                    <h1 class="login-form-title">Se connecter</h1>
+                    <p class="login-form-subtitle">Entrez vos identifiants pour accéder à votre espace</p>
+                </div>
+
+                <?php
+                $flash = getFlash();
+                if ($flash):
+                ?>
+                <div class="flash-message flash-<?= $flash['type'] ?>">
+                    <?= $flash['type'] === 'success' ? '<i data-lucide="check-circle" class="icon-sm"></i>' : '<i data-lucide="x-circle" class="icon-sm"></i>' ?>
+                    <?= escape($flash['message']) ?>
+                </div>
+                <?php endif; ?>
+
+                <form method="POST" action="index.php?page=login" class="login-form">
+                    <div class="login-input-group">
+                        <label class="form-label" for="id">Identifiant</label>
+                        <div class="login-input-wrapper">
+                            <span class="login-input-icon"><i data-lucide="user"></i></span>
+                            <input type="number" id="id" name="id" class="form-control login-input" placeholder="Votre identifiant" min="1" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="login-input-group">
+                        <label class="form-label" for="mot_de_passe">Mot de passe</label>
+                        <div class="login-input-wrapper">
+                            <span class="login-input-icon"><i data-lucide="lock"></i></span>
+                            <input type="password" id="mot_de_passe" name="mot_de_passe" class="form-control login-input" placeholder="Votre mot de passe" required>
+                            <button type="button" class="login-toggle-pw" id="togglePwBtn" tabindex="-1" aria-label="Afficher le mot de passe">
+                                <i data-lucide="eye" id="pwIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-options">
+                        <label class="login-remember">
+                            <input type="checkbox" name="remember" value="1">
+                            <span>Se souvenir de moi</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary login-submit-btn">
+                        <i data-lucide="log-in" class="icon-sm"></i> Se connecter
+                    </button>
+                </form>
+
+                <div class="login-hint">
+                    <i data-lucide="info" class="icon-sm"></i>
+                    Compte démo&nbsp;: ID <strong>1</strong> / Mot de passe <strong>admin</strong>
+                </div>
+
+                <div class="login-form-footer">
+                    &copy; <?= date('Y') ?> Epoka &mdash; Tous droits réservés
+                </div>
+
             </div>
 
         </div>

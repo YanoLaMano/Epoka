@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Epoka</string>
+    <string name="login_title">Se connecter</string>
+    <string name="hint_id">Identifiant</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="btn_login">Se connecter</string>
+    <string name="btn_create">Créer la mission</string>
+    <string name="no_missions">Aucune mission pour l\'instant.\nAppuyez sur + pour en créer une.</string>
+</resources>
