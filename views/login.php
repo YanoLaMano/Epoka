@@ -127,8 +127,22 @@
 
             <!-- Heading -->
             <div class="login-card-heading">
-                <h1 class="login-form-title">Bon retour</h1>
+                <?php
+                $h = (int)date('H');
+                if ($h >= 5  && $h < 12) $greeting = 'Bonjour';
+                elseif ($h >= 12 && $h < 18) $greeting = 'Bon après-midi';
+                else $greeting = 'Bonsoir';
+                ?>
+                <h1 class="login-form-title"><?= $greeting ?>&nbsp;!</h1>
                 <p class="login-form-subtitle">Connectez-vous à votre espace Epoka</p>
+                <div class="login-intro">
+                    <p class="login-intro-text">
+                        Gérez vos <span class="login-intro-highlight">missions</span>,
+                        vos <span class="login-intro-highlight">salariés</span> et
+                        vos <span class="login-intro-highlight">agences</span>
+                        en toute simplicité.
+                    </p>
+                </div>
             </div>
 
             <?php
