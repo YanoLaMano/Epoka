@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -l \"cours\\\\|documentation\\\\|guide\\\\|tutorial\\\\|formation\" /c/wamp64/www/Epoka/*.php)"
+    ]
+  }
+}
