@@ -191,64 +191,108 @@
 
     // ── Mascot State Machine ──
     const mascotContainer = document.getElementById('mascotContainer');
-    const mascotMouth     = document.getElementById('mascotMouth');
     const pupilL          = document.getElementById('pupilL');
     const pupilR          = document.getElementById('pupilR');
     const idInput         = document.getElementById('id');
     const pwInputEl       = document.getElementById('mot_de_passe');
 
     let mascotState = 'idle';
+    let stateTimeout  = null;
 
-    function setMascotState(state) {
+    function setMascotState(state, duration = 0) {
         if (mascotState === state) return;
+        clearTimeout(stateTimeout);
         mascotState = state;
         mascotContainer.setAttribute('data-state', state);
+        if (duration > 0) {
+            stateTimeout = setTimeout(() => setMascotState('idle'), duration);
+        }
     }
 
-    // ── Eye follow mouse ──
+    // ── Smooth Eye Follow (requestAnimationFrame lerp) ──
     const EYE_L_CX = 75, EYE_R_CX = 125, EYE_CY = 108, MAX_OFFSET = 6;
+    let targetEyeX = 0, targetEyeY = 0;
+    let currentEyeX = 0, currentEyeY = 0;
 
+    (function animEyes() {
+        currentEyeX += (targetEyeX - currentEyeX) * 0.12;
+        currentEyeY += (targetEyeY - currentEyeY) * 0.12;
+        if (mascotState !== 'hiding') {
+            pupilL.setAttribute('cx', EYE_L_CX + currentEyeX);
+            pupilR.setAttribute('cx', EYE_R_CX + currentEyeX);
+            pupilL.setAttribute('cy', EYE_CY + currentEyeY);
+            pupilR.setAttribute('cy', EYE_CY + currentEyeY);
+        } else {
+            targetEyeX = 0; targetEyeY = 0;
+        }
+        requestAnimationFrame(animEyes);
+    })();
+
+    // ── Mouse move: yeux suivent + détection proximité ──
     document.addEventListener('mousemove', (e) => {
         if (mascotState === 'hiding') return;
-        const svg = document.querySelector('.mascot-svg');
+        const svg = mascotContainer.querySelector('.mascot-svg');
         if (!svg) return;
         const rect = svg.getBoundingClientRect();
-        const svgCenterX = rect.left + rect.width / 2;
-        const svgCenterY = rect.top + rect.height * 0.47;
-        const dx = e.clientX - svgCenterX;
-        const dy = e.clientY - svgCenterY;
+        const svgCX = rect.left + rect.width / 2;
+        const svgCY = rect.top  + rect.height * 0.47;
+        const dx = e.clientX - svgCX;
+        const dy = e.clientY - svgCY;
         const dist = Math.sqrt(dx * dx + dy * dy);
+        const norm  = dist || 1;
         const clamp = Math.min(dist, 120) / 120;
-        const offsetX = (dx / (dist || 1)) * MAX_OFFSET * clamp;
-        const offsetY = (dy / (dist || 1)) * MAX_OFFSET * clamp;
-        if (pupilL) { pupilL.setAttribute('cx', EYE_L_CX + offsetX); pupilL.setAttribute('cy', EYE_CY + offsetY); }
-        if (pupilR) { pupilR.setAttribute('cx', EYE_R_CX + offsetX); pupilR.setAttribute('cy', EYE_CY + offsetY); }
+        targetEyeX = (dx / norm) * MAX_OFFSET * clamp;
+        targetEyeY = (dy / norm) * MAX_OFFSET * clamp;
+
+        // Surprise si souris trop proche
+        if (dist < 55 && mascotState === 'idle') {
+            setMascotState('surprised', 1100);
+        }
     });
 
+    // ── Clic sur le personnage ──
+    mascotContainer.addEventListener('click', () => {
+        if (mascotState === 'idle' || mascotState === 'watching') {
+            setMascotState('surprised', 900);
+        }
+    });
+
+    // ── Clic ailleurs → idle ──
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.login-form') &&
+            !e.target.closest('.login-toggle-pw') &&
+            !e.target.closest('.mascot-container')) {
+            if (['watching','happy','surprised'].includes(mascotState)) {
+                setMascotState('idle');
+            }
+            targetEyeX = 0; targetEyeY = 0;
+        }
+    });
+
+    // ── Champ identifiant ──
     if (idInput) {
         idInput.addEventListener('focus', () => setMascotState('watching'));
-        idInput.addEventListener('blur', (e) => {
+        idInput.addEventListener('blur',  (e) => {
             if (e.relatedTarget !== pwInputEl) setMascotState('idle');
         });
         idInput.addEventListener('input', () => {
-            const offset = Math.min(idInput.value.length * 0.8, 5);
-            if (pupilL) { pupilL.setAttribute('cy', 111); pupilL.setAttribute('cx', 75 + offset); }
-            if (pupilR) { pupilR.setAttribute('cy', 111); pupilR.setAttribute('cx', 125 + offset); }
+            targetEyeX = Math.min(idInput.value.length * 0.8, 5);
+            targetEyeY = 3;
         });
     }
 
+    // ── Champ mot de passe ──
     if (pwInputEl) {
         pwInputEl.addEventListener('focus', () => {
             setMascotState('hiding');
-            if (pupilL) { pupilL.setAttribute('cy', 108); pupilL.setAttribute('cx', 75); }
-            if (pupilR) { pupilR.setAttribute('cy', 108); pupilR.setAttribute('cx', 125); }
+            targetEyeX = 0; targetEyeY = 0;
         });
         pwInputEl.addEventListener('blur', (e) => {
             setMascotState(e.relatedTarget === idInput ? 'watching' : 'idle');
         });
     }
 
-    // ── Toggle password visibility ──
+    // ── Bouton afficher/cacher mot de passe ──
     const togglePwBtn = document.getElementById('togglePwBtn');
     if (togglePwBtn && pwInputEl) {
         togglePwBtn.addEventListener('click', () => {
@@ -265,13 +309,36 @@
         });
     }
 
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.login-form') && !e.target.closest('.login-toggle-pw')) {
-            setMascotState('idle');
-            if (pupilL) { pupilL.setAttribute('cy', 108); pupilL.setAttribute('cx', 75); }
-            if (pupilR) { pupilR.setAttribute('cy', 108); pupilR.setAttribute('cx', 125); }
-        }
-    });
+    // ── Bouton connexion hover → happy ──
+    const submitBtn = document.querySelector('.login-submit-btn');
+    if (submitBtn) {
+        submitBtn.addEventListener('mouseenter', () => {
+            if (!['hiding','peeking'].includes(mascotState)) setMascotState('happy');
+        });
+        submitBtn.addEventListener('mouseleave', () => {
+            if (mascotState === 'happy') setMascotState('idle');
+        });
+    }
+
+    // ── Erreur de connexion → scared ──
+    if (document.querySelector('.flash-error')) {
+        setTimeout(() => setMascotState('scared', 2200), 300);
+    }
+
+    // ── Clignement aléatoire ──
+    (function scheduleBlink() {
+        setTimeout(() => {
+            if (['idle','watching'].includes(mascotState)) {
+                mascotContainer.classList.add('blinking');
+                setTimeout(() => {
+                    mascotContainer.classList.remove('blinking');
+                    scheduleBlink();
+                }, 160);
+            } else {
+                scheduleBlink();
+            }
+        }, 2200 + Math.random() * 4000);
+    })();
 
     // ── Theme Switcher ──
     const themeToggleBtn = document.getElementById('themeToggleBtn');
