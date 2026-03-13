@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palette principale Epoka (reprend le thème sombre du web) -->
+    <color name="primary">#3949AB</color>
+    <color name="primary_dark">#1A237E</color>
+    <color name="primary_container">#283593</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <!-- Fond sombre -->
+    <color name="background">#0D0E1A</color>
+    <color name="surface">#13141F</color>
+    <color name="surface_variant">#1E2035</color>
+    <color name="on_background">#FFFFFF</color>
+    <color name="on_surface">#FFFFFF</color>
+
+    <!-- Texte -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AAAAAA</color>
+    <color name="text_muted">#666680</color>
+
+    <!-- Accent (bleu clair pour les icônes/liens) -->
+    <color name="accent_blue">#4A9EFF</color>
+
+    <!-- Badges de statut -->
+    <color name="statut_brouillon_bg">#1E2035</color>
+    <color name="statut_brouillon_text">#AAAAAA</color>
+    <color name="statut_validee_bg">#0D2A1A</color>
+    <color name="statut_validee_text">#4ADE80</color>
+    <color name="statut_payee_bg">#0D1F2A</color>
+    <color name="statut_payee_text">#4A9EFF</color>
+
+    <!-- Erreur -->
+    <color name="error">#EF4444</color>
+    <color name="error_bg">#1F1515</color>
+</resources>
