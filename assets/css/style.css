@@ -1412,6 +1412,32 @@ table.table tbody tr:last-child td {
     margin: 0;
 }
 
+.login-intro {
+    margin-top: 0.9rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    animation: loginIntroFadeIn 0.7s ease 0.25s both;
+}
+
+.login-intro-text {
+    font-size: 0.81rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.55;
+}
+
+.login-intro-highlight {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+@keyframes loginIntroFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ── Form ── */
 .login-form {
     display: flex;
