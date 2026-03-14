@@ -1,151 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/background">
 
-    <!-- AppBar avec info utilisateur -->
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+    <!-- Barre titre -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/surface"
-        app:elevation="0dp">
+        style="@style/Theme.Epoka.Toolbar" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-            android:paddingHorizontal="8dp">
-
-            <!-- Logo E -->
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                app:cardCornerRadius="18dp"
-                app:cardBackgroundColor="@color/primary_dark"
-                android:layout_marginEnd="12dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="E"
-                    android:textSize="18sp"
-                    android:textColor="@color/on_primary"
-                    android:textStyle="bold"
-                    android:gravity="center" />
-            </com.google.android.material.card.MaterialCardView>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/tvUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:textColor="@color/text_primary"
-                    android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/tvUserFonction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="@color/text_secondary" />
-            </LinearLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Déco."
-                android:textSize="12sp"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                app:cornerRadius="8dp" />
-
-        </androidx.appcompat.widget.Toolbar>
-
-        <!-- Séparateur -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/surface_variant" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!-- Contenu principal -->
+    <!-- Contenu centré -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:gravity="center"
+        android:padding="32dp">
 
-        <!-- Titre section -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Mes missions"
-                android:textSize="18sp"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <!-- ProgressBar -->
-        <ProgressBar
-            android:id="@+id/progressBar"
+        <!-- Salutation -->
+        <TextView
+            android:id="@+id/tvGreeting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-            android:layout_marginTop="48dp" />
-
-        <!-- Message vide -->
-        <TextView
-            android:id="@+id/tvEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/no_missions"
-            android:textSize="14sp"
-            android:textColor="@color/text_secondary"
+            android:textSize="20sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
             android:gravity="center"
-            android:padding="48dp"
-            android:visibility="gone" />
+            android:layout_marginBottom="48dp" />
 
-        <!-- Liste -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingHorizontal="12dp"
-            android:paddingBottom="80dp"
-            android:clipToPadding="false" />
+        <!-- Bouton Ajouter une mission -->
+        <Button
+            android:id="@+id/btnAddMission"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:text="Ajouter une mission"
+            android:textSize="15sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Bouton Quitter -->
+        <Button
+            android:id="@+id/btnQuit"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:text="Quitter"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
-    <!-- FAB Créer une mission -->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fabCreate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="20dp"
-        android:text="Nouvelle mission"
-        app:icon="@android:drawable/ic_input_add"
-        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

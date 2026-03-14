@@ -19,7 +19,12 @@ if (!$id || !$password) {
 }
 
 $db   = getDb();
-$stmt = $db->prepare("SELECT * FROM salarie WHERE id = ?");
+$stmt = $db->prepare("
+    SELECT s.*, a.id_ville AS id_ville_agence
+    FROM salarie s
+    LEFT JOIN agence a ON s.id_agence = a.id
+    WHERE s.id = ?
+");
 $stmt->execute([$id]);
 $salarie = $stmt->fetch();
 

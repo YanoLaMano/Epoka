@@ -43,8 +43,12 @@ if ($method === 'GET') {
 } elseif ($method === 'POST') {
     $body = json_decode(file_get_contents('php://input'), true);
 
-    foreach (['intitule','date_debut','date_fin','id_ville_depart','id_ville_arrivee','id_salarie'] as $f) {
+    foreach (['date_debut','date_fin','id_ville_depart','id_ville_arrivee','id_salarie'] as $f) {
         if (empty($body[$f])) json_out(['error' => "Champ requis : $f"], 400);
+    }
+    // Intitulé auto-généré si non fourni (saisie Android simplifiée)
+    if (empty($body['intitule'])) {
+        $body['intitule'] = "Mission du " . $body['date_debut'];
     }
     if ($body['date_debut'] > $body['date_fin']) {
         json_out(['error' => 'La date de début doit être avant la date de fin'], 400);

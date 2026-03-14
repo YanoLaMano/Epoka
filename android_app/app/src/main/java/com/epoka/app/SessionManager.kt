@@ -12,12 +12,13 @@ class SessionManager(context: Context) {
 
     fun saveSession(salarie: Salarie) {
         prefs.edit().apply {
-            putInt("id",       salarie.id)
-            putString("nom",   salarie.nom)
-            putString("prenom",salarie.prenom)
-            putString("fonction", salarie.fonction)
-            putBoolean("peut_valider", salarie.peutValider == 1)
-            putBoolean("peut_payer",   salarie.peutPayer   == 1)
+            putInt("id",              salarie.id)
+            putString("nom",          salarie.nom)
+            putString("prenom",       salarie.prenom)
+            putString("fonction",     salarie.fonction)
+            putBoolean("peut_valider",    salarie.peutValider == 1)
+            putBoolean("peut_payer",      salarie.peutPayer   == 1)
+            putInt("id_ville_agence", salarie.idVilleAgence ?: -1)
             apply()
         }
     }
@@ -30,7 +31,8 @@ class SessionManager(context: Context) {
     fun getFonction(): String= prefs.getString("fonction", "") ?: ""
     fun peutValider(): Boolean = prefs.getBoolean("peut_valider", false)
     fun peutPayer(): Boolean   = prefs.getBoolean("peut_payer", false)
-    fun getFullName(): String  = "${getPrenom()} ${getNom()}"
+    fun getFullName(): String       = "${getPrenom()} ${getNom()}"
+    fun getIdVilleAgence(): Int     = prefs.getInt("id_ville_agence", -1)
 
     fun clearSession() = prefs.edit().clear().apply()
 }

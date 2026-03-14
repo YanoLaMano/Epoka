@@ -7,9 +7,10 @@ data class Salarie(
     val nom: String,
     val prenom: String,
     val fonction: String,
-    @SerializedName("peut_valider") val peutValider: Int,
-    @SerializedName("peut_payer")   val peutPayer: Int,
-    @SerializedName("id_agence")    val idAgence: Int?
+    @SerializedName("peut_valider")    val peutValider: Int,
+    @SerializedName("peut_payer")      val peutPayer: Int,
+    @SerializedName("id_agence")       val idAgence: Int?,
+    @SerializedName("id_ville_agence") val idVilleAgence: Int?
 )
 
 data class Ville(
