@@ -119,6 +119,35 @@ redirect($url)        // header Location + exit
 
 ---
 
+## Application Android (`android_app/`)
+
+Projet Android Studio — Kotlin, Retrofit2 + coroutines, Material Design 3.
+
+### Écrans
+- `LoginActivity` — authentification (No + mot de passe) via `api/auth.php`
+- `MainActivity` — menu simple : "Bonjour [Prénom] [Fonction]" + "Ajouter une mission" + "Quitter"
+- `CreateMissionActivity` — formulaire : Du / Au / à (Spinner ville destination) + "Envoyer" → affiche "Enregistrement effectué"
+
+### API REST PHP (`api/`)
+- `auth.php` — POST login, retourne le salarié + `id_ville_agence` (JOIN agence)
+- `missions.php` — GET/POST/DELETE ; `intitule` auto-généré si absent
+- `villes.php` — GET toutes les villes
+
+### Pattern code/libellé (Spinner) — conforme cours prof
+`VilleAdapter` = `ArrayAdapter<Ville>`. `Ville.toString()` = `"Nom (CP)"`. `ville.id` = le code.
+
+### Ville de départ
+Dérivée automatiquement de l'agence du salarié connecté :
+`salarie.id_agence` → `agence.id_ville` → retourné par `auth.php` comme `id_ville_agence` → stocké dans `SessionManager.getIdVilleAgence()`
+
+### DB réelle (différente du schéma initial)
+- `salarie` : id, nom, prenom, fonction, **id_agence**, **peut_valider**, **peut_payer**, mot_de_passe
+- `agence` : id, adresse, **id_ville** (FK → ville)
+- `ville` : id, nom, code_postal
+- `mission` : id, intitule, id_salarie, **id_ville_depart**, **id_ville_arrivee**, date_debut, date_fin, statut, nb_repas
+
+---
+
 ## Conventions et notes de développement
 - Pas de framework — PHP vanilla MVC maison
 - CSS custom en design system complet, Bootstrap utilisé uniquement pour le grid et quelques utilitaires
