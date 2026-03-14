@@ -148,6 +148,12 @@ Dérivée automatiquement de l'agence du salarié connecté :
 
 ---
 
+## Instructions Claude
+
+- Après chaque tâche complétée : mettre à jour `CLAUDE.md` si nécessaire, puis faire un commit + push automatiquement.
+
+---
+
 ## Conventions et notes de développement
 - Pas de framework — PHP vanilla MVC maison
 - CSS custom en design system complet, Bootstrap utilisé uniquement pour le grid et quelques utilitaires
