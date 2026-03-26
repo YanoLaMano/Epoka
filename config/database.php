@@ -9,10 +9,10 @@ function getDatabase() {
         $host = '127.0.0.1';
         $dbname = 'epoka';
         $username = 'root'; // Identifiant par défaut de WampServer
-        $password = '';     // Mot de passe vide par défaut sous WampServer
+        $password = '';     // Mot de passe vide par défaut sous WampServer (Windows)
         $charset = 'utf8mb4';
 
-        $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
+        $dsn = "mysql:host=$host;port=3306;dbname=$dbname;charset=$charset";
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
