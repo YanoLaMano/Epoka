@@ -9,7 +9,7 @@ function getDatabase() {
         $host = '127.0.0.1';
         $dbname = 'epoka';
         $username = 'root'; // Identifiant par défaut de WampServer
-        $password = 'root'; // Mot de passe root sous WampServer (Windows)
+        $password = '';     // Mot de passe vide par défaut sous WampServer (Windows)
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;port=3306;dbname=$dbname;charset=$charset";
